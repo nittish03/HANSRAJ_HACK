@@ -7,8 +7,7 @@ export async function POST(request : Request) {
     const {email} = body;
     
     if (!email) {
-        return NextResponse.json( {
-                message:"Missing value email",
+        return NextResponse.json("Missing value email", {
                 status : 422
             }
         )
@@ -20,8 +19,7 @@ export async function POST(request : Request) {
         }
     })
     if (!nonVerifiedUser) {
-        return NextResponse.json( {
-                message:"Uesr does not exist",
+        return NextResponse.json("User does not exist", {
                 status : 400
             }
         )
@@ -29,9 +27,8 @@ export async function POST(request : Request) {
 
     const timeDifference = (nonVerifiedUser.otpExpiry.getTime() - new Date().getTime()) / 1000
     if (timeDifference > 0) {
-        return NextResponse.json({
-            message:`OTP already sent, please check your email or wait until ${Math.ceil(timeDifference)} seconds before resending OTP`,
-            status : 401
+        return NextResponse.json(`OTP already sent, please check your email or wait until ${Math.ceil(timeDifference)} seconds before resending OTP`, {
+            status : 400
         })
     }
 
@@ -56,8 +53,7 @@ export async function POST(request : Request) {
         })
     } catch (err) {
         console.log(err)
-        return NextResponse.json( {
-            message:"Something went wrong",
+        return NextResponse.json("Something went wrong", {
             status : 500
         })
     }

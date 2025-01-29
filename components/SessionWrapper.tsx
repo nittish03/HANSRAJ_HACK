@@ -13,4 +13,3 @@ export default function SessionWrapper({ children }: SessionWrapperProps) {
     </SessionProvider>
   )
 }
-

@@ -23,11 +23,11 @@ export async function POST(request: Request) {
         })
     } else if (nonVerifiedUser.otpExpiry.getTime() < new Date().getTime()) {
         return NextResponse.json("OTP has been expired, click on resend OTP", {
-            status: 401
+            status: 400
         })
     } else if (nonVerifiedUser.otp !== parseInt(otp)) {
         return NextResponse.json("Invalid OTP", {
-            status: 402
+            status: 400
         })
     } else {
         await prismaDB.user.create({

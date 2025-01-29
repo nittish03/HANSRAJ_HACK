@@ -23,7 +23,7 @@ export default function RootLayout({
         <SessionWrapper>
           <Navbar />
           <Toaster />
-          <div className="mt-24"></div>
+          <div className="mt-12"></div>
           <main>{children}</main>
         </SessionWrapper>
       </body>

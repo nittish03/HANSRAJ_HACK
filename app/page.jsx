@@ -1,5 +1,5 @@
 import LandingPage from '@/components/LandingPage'
-import Image from "next/image";
+import PollutionChatBot from '@/components/PollutionChatbot'
 
 export default function Home() {
   return (
@@ -7,6 +7,8 @@ export default function Home() {
 <div className="w-screen h-[90vh] bg-black overflow-hidden ">
 
 <LandingPage/>
+<PollutionChatBot/>
+
 </div>
 </>
   );

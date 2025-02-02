@@ -1,9 +1,29 @@
-import React from 'react'
+import { ArrowBigRight, ArrowRight } from 'lucide-react';
+import React from 'react';
 
 const LandingPage = () => {
   return (
-    <div className='bg-white text-black h-screen '>LandingPage</div>
-  )
+    <div className='bg-black text-white bg-[linear-gradient(to_bottom,#0000,#200D42_34%,#4F21A1_65%,#A46EDB_82%)] py-[32px] flex items-center justify-center min-h-[90vh]'>
+      <div className="absolute h-[900px] w-[1200px] sm:w-[2000px] sm:h-[1500px] rounded-[100%] bg-black left-1/2 -translate-x-1/2 border border-[#B48CDE] bg-[radial-gradient(closest-side, #000_82%,#9560EB)] top-[calc(100%-96px)] filter blur-md"></div>
+      <div className="container relative flex flex-col items-center">
+        <div className="flex items-center justify-center">
+          <a href="#" className="inline-flex gap-3 border py-1 px-2 rounded-lg border-white/30 relative overflow-clip">
+            <span className="bg-gradient-to-r from-pink-500 to-yellow-400 to-teal-500 text-transparent bg-clip-text">Empowering minds, transforming healthcare!</span>
+            <span className="inline-flex items-center gap-1">
+              <span className="text-teal-500"><ArrowRight /></span>
+            </span>
+          </a>
+        </div>
+        <h1 className="text-7xl font-bold tracking-tighter text-center mt-8">MediMind</h1>
+        <p className="text-center text-xl mt-4">
+        Learn, heal, and grow with expert-led <br /> courses, trusted medical resources, and interactive <br /> health education—all in one place!
+        </p>
+        <div className="flex justify-center mt-6">
+          <button className="bg-white text-black py-3 px-5 rounded-lg font-medium hover:bg-black hover:text-white hover:border hover:border-white">Get for free</button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default LandingPage
+export default LandingPage;

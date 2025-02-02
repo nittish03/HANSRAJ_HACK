@@ -19,20 +19,18 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="shadow-md bg-gradient-to-r from-green-500 to-blue-500 backdrop-blur-lg  flex justify-between items-center py-1 px-6 text-white font-inter fixed top-0 left-0 w-full z-50">
+    <nav className="shadow-md bg-black flex justify-between items-center py-1 px-6 text-white font-inter fixed top-0 left-0 w-full z-50">
       <div className="text-3xl font-extrabold font-koho text-white drop-shadow-lg">HACKATHON</div>
       <div className="flex gap-6 text-base">
-        <NavLink href="/" className=" hover:text-green-100 transition">Home</NavLink>
-        <NavLink href="/dashboard" className=" hover:text-green-100 transition">Dashboard</NavLink>
-
-
+        <NavLink href="/" className="hover:text-green-100 transition">Home</NavLink>
+        <NavLink href="/dashboard" className="hover:text-green-100 transition">Dashboard</NavLink>
       </div>
       <div className="flex items-center">
         {session ? (
           <div className="flex items-center gap-4">
             <span className="text-lg font-koho">{session.user?.name?.split(" ")[0]}</span>
             <button
-              className="flex items-center justify-center bg-white text-green-600 p-2 rounded-full hover:bg-green-200"
+              className="flex items-center justify-center bg-white text-black p-2 rounded-full hover:bg-black hover:text-white border border-white"
               onClick={handleLogout}
             >
               <CgProfile size={30} />
@@ -40,7 +38,7 @@ export default function Navbar() {
           </div>
         ) : (
           <Link href="/login">
-            <button className="py-2 px-4 bg-green-500 hover:bg-green-400 text-white rounded-lg text-lg">Login/Signup</button>
+            <button className="py-2 px-4 bg-white text-black hover:bg-black hover:text-white border border-white rounded-lg text-lg">Login/Signup</button>
           </Link>
         )}
       </div>

@@ -1,3 +1,4 @@
+// components/CustomButton.tsx
 import React from 'react'
 
 interface ButtonProps {
@@ -10,9 +11,9 @@ interface ButtonProps {
 const CustomButton = ({title, type, onClick, variant}: ButtonProps) => {
 
   const classes = {
-    default: "w-full h-fit bg-custom-neon text-black font-koho font-medium rounded-md py-1.5",
-    gray: "w-fit px-6 py-2 bg-gray-500 rounded-md hover:bg-gray-600 transition-all duration-500 ease-Out text-nowrap text-base ",
-    disabled: "w-full h-fit bg-gray-500 text-gray-200 rounded-md py-1 pointer-events-none"
+    default: "w-full h-fit bg-custom-neon text-black font-koho font-medium rounded-lg py-1.5", // Changed to rounded-lg
+    gray: "w-fit px-6 py-2 bg-gray-500 rounded-lg hover:bg-gray-600 transition-all duration-500 ease-Out text-nowrap text-base ", // Changed to rounded-lg
+    disabled: "w-full h-fit bg-gray-500 text-gray-200 rounded-lg py-1 pointer-events-none" // Changed to rounded-lg
   }
 
   return (

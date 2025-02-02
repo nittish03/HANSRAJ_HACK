@@ -8,7 +8,7 @@ const LandingPage = () => {
       <div className="container relative flex flex-col items-center">
         <div className="flex items-center justify-center">
           <a href="#" className="inline-flex gap-3 border py-1 px-2 rounded-lg border-white/30 relative overflow-clip">
-            <span className="bg-gradient-to-r from-pink-500 to-yellow-400 to-teal-500 text-transparent bg-clip-text">Empowering minds, transforming healthcare!</span>
+            <span className="bg-gradient-to-r from-pink-500 to-yellow-300 text-transparent bg-clip-text">Empowering minds, transforming healthcare!</span>
             <span className="inline-flex items-center gap-1">
               <span className="text-teal-500"><ArrowRight /></span>
             </span>

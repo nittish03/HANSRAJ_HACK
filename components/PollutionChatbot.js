@@ -47,14 +47,14 @@ const PollutionChatbot = () => {
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className="bg-purple-500 text-black p-3 rounded-full shadow-lg hover:bg-purple-600 transition-all"
+          className="bg-purple-500 text-black p-3 rounded-full shadow-lg hover:bg-purple-600 transition-all border border-black"
         >
           <MessageCircleIcon size={24} />
         </button>
       )}
 
       {isOpen && (
-        <div className="fixed bottom-4 right-4 w-80 h-[500px] bg-white rounded-lg shadow-xl border flex flex-col">
+        <div className="fixed bottom-4 right-4 w-80 h-[500px] bg-white rounded-lg shadow-xl border border-black flex flex-col">
           <div className="bg-purple-500 text-black p-3 flex justify-between items-center rounded-t-lg">
             <h3 className="font-bold">Chatbot</h3>
             <button onClick={() => setIsOpen(false)}>

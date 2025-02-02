@@ -4,7 +4,7 @@ import PollutionChatBot from '@/components/PollutionChatbot'
 export default function Home() {
   return (
 <>
-<div className="w-screen h-[90vh] bg-black overflow-hidden ">
+<div className="w-screen  h-[90vh] overflow-hidden ">
 
 <LandingPage/>
 <PollutionChatBot/>

@@ -3,8 +3,10 @@ import React from 'react';
 
 const LandingPage = () => {
   return (
-    <div className='bg-black text-white bg-[linear-gradient(to_bottom,#0000,#200D42_34%,#4F21A1_65%,#A46EDB_82%)] py-[32px] flex items-center justify-center min-h-[90vh]'>
-
+    <div className='text-white  py-[32px] flex items-center justify-center min-h-[90vh] '>
+          <div className="flex justify-center items-center absolute left-[33vw] ">
+            <div className="rounded-full bg-black blur-lg h-[300px] w-[500px] -z-50"></div>
+          </div>
       <div className="container relative flex flex-col items-center">
         <div className="flex items-center justify-center">
           <a href="#" className="inline-flex gap-3 border py-1 px-2 rounded-lg border-white/30 relative overflow-clip">
@@ -19,7 +21,7 @@ const LandingPage = () => {
         Learn, heal, and grow with expert-led <br /> courses, trusted medical resources, and interactive <br /> health education—all in one place!
         </p>
         <div className="flex justify-center mt-6">
-          <button className="bg-white text-black py-3 px-5 rounded-lg font-medium hover:bg-black hover:text-white hover:border hover:border-white">Get for free</button>
+          <button className="transition-all  duration-500 bg-white text-black py-3 px-5 rounded-lg font-medium    hover:bg-black hover:text-white hover:border hover:border-white">Get for free</button>
         </div>
       </div>
     </div>

@@ -19,9 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className=" w-screen text-white bg-black font-inter">
+      <body className="w-screen bg-black text-white bg-[linear-gradient(to_bottom,#0000,#200D42_34%,#4F21A1_65%,#A46EDB_82%)] font-inter">
         <SessionWrapper>
           <Navbar />
+
           <Toaster />
           <div className="mt-12"></div>
           <main>{children}</main>

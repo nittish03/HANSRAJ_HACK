@@ -5,6 +5,7 @@ export default function Home() {
   return (
 <>
 <div className="w-screen h-[90vh] bg-black overflow-hidden ">
+
 <LandingPage/>
 </div>
 </>

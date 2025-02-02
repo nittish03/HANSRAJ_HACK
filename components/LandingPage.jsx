@@ -4,7 +4,7 @@ import React from 'react';
 const LandingPage = () => {
   return (
     <div className='bg-black text-white bg-[linear-gradient(to_bottom,#0000,#200D42_34%,#4F21A1_65%,#A46EDB_82%)] py-[32px] flex items-center justify-center min-h-[90vh]'>
-      <div className="absolute h-[900px] w-[1200px] sm:w-[2000px] sm:h-[1500px] rounded-[100%] bg-black left-1/2 -translate-x-1/2 border border-[#B48CDE] bg-[radial-gradient(closest-side, #000_82%,#9560EB)] top-[calc(100%-96px)] filter blur-md"></div>
+
       <div className="container relative flex flex-col items-center">
         <div className="flex items-center justify-center">
           <a href="#" className="inline-flex gap-3 border py-1 px-2 rounded-lg border-white/30 relative overflow-clip">

@@ -26,7 +26,6 @@ export default function Navbar() {
         <NavLink href="/dashboard" className="hover:text-green-100 transition">Dashboard</NavLink>
         <NavLink href="/maps" className="hover:text-green-100 transition">Maps</NavLink>
         <NavLink href="/maps1" className="hover:text-green-100 transition">Maps1</NavLink>
-        <NavLink href="/maps2" className="hover:text-green-100 transition">Maps2</NavLink>
       </div>
       <div className="flex items-center">
         {session ? (

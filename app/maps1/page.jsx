@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useLoadScript, Autocomplete } from "@react-google-maps/api";
+import axios from "axios";
 
 const libraries = ["places"];
 
@@ -13,11 +14,12 @@ const PollutionMap = () => {
   });
 
   const [pollutionData, setPollutionData] = useState([]);
+  const [transportData, setTransportData] = useState([]);
+  const [healthcareData, setHealthcareData] = useState([]);
   const [clickedLocationData, setClickedLocationData] = useState(null);
   const [autocomplete, setAutocomplete] = useState(null);
   const [searchLocation, setSearchLocation] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [distanceData, setDistanceData] = useState(null);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -31,6 +33,50 @@ const PollutionMap = () => {
   }, []);
 
   useEffect(() => {
+    const fetchPollutionData = async () => {
+      const apiKey = "eaa49a4b01b58bc2d26e2b713fdcc0ddb8de4182";
+      const response = await axios.get(
+        `https://api.waqi.info/feed/geo:28.6139;77.2090/?token=${apiKey}`
+      );
+      setPollutionData([
+        {
+          name: "Delhi",
+          lat: 28.6139,
+          lon: 77.2090,
+          aqi: response.data.data.aqi,
+          description: response.data.data.dominentpol,
+        },
+      ]);
+    };
+
+    const fetchTransportData = async () => {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?format=json&q=metro+station+near+Delhi`
+      );
+      setTransportData(response.data.map((loc) => ({
+        name: loc.display_name,
+        lat: parseFloat(loc.lat),
+        lon: parseFloat(loc.lon),
+      })));
+    };
+
+    const fetchHealthcareData = async () => {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/search?format=json&q=hospital+near+Delhi`
+      );
+      setHealthcareData(response.data.map((loc) => ({
+        name: loc.display_name,
+        lat: parseFloat(loc.lat),
+        lon: parseFloat(loc.lon),
+      })));
+    };
+
+    fetchPollutionData();
+    fetchTransportData();
+    fetchHealthcareData();
+  }, []);
+
+  useEffect(() => {
     const map = new maplibregl.Map({
       container: "map",
       style: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
@@ -39,19 +85,27 @@ const PollutionMap = () => {
     });
 
     pollutionData.forEach((hotspot) => {
-      const markerElement = document.createElement("div");
-      markerElement.style.backgroundColor = getMarkerColor(hotspot.aqi);
-      markerElement.style.width = "15px";
-      markerElement.style.height = "15px";
-      markerElement.style.borderRadius = "50%";
-
-      new maplibregl.Marker(markerElement)
+      new maplibregl.Marker({ color: "red" })
         .setLngLat([hotspot.lon, hotspot.lat])
         .setPopup(
           new maplibregl.Popup().setHTML(
             `<strong>${hotspot.name}</strong><br/>AQI: ${hotspot.aqi}<br/>Pollutant: ${hotspot.description}`
           )
         )
+        .addTo(map);
+    });
+
+    transportData.forEach((loc) => {
+      new maplibregl.Marker({ color: "green" })
+        .setLngLat([loc.lon, loc.lat])
+        .setPopup(new maplibregl.Popup().setText(`${loc.name} (Transport)`))
+        .addTo(map);
+    });
+
+    healthcareData.forEach((loc) => {
+      new maplibregl.Marker({ color: "blue" })
+        .setLngLat([loc.lon, loc.lat])
+        .setPopup(new maplibregl.Popup().setText(`${loc.name} (Healthcare)`))
         .addTo(map);
     });
 
@@ -63,7 +117,7 @@ const PollutionMap = () => {
     }
 
     return () => map.remove();
-  }, [pollutionData, currentLocation]);
+  }, [pollutionData, transportData, healthcareData, currentLocation]);
 
   const onPlaceChanged = () => {
     if (autocomplete) {
@@ -76,19 +130,19 @@ const PollutionMap = () => {
   };
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-screen text-black">
       {isLoaded && (
         <Autocomplete onLoad={setAutocomplete} onPlaceChanged={onPlaceChanged}>
           <input
             type="text"
             placeholder="Search location..."
-            className="absolute top-4 left-4 z-10 p-2 bg-white rounded"
+            className="absolute top-4 left-4 z-10 p-2 bg-white rounded text-black"
           />
         </Autocomplete>
       )}
       <div id="map" className="w-full h-full" />
       {clickedLocationData && (
-        <div className="absolute bottom-4 left-4 bg-white p-4 rounded-lg shadow-lg">
+        <div className="absolute bottom-4 left-4 bg-white p-4 rounded-lg shadow-lg text-black">
           <strong className="block text-lg">Clicked Location</strong>
           <p>Name: {clickedLocationData.name}</p>
           <p>AQI: {clickedLocationData.aqi}</p>

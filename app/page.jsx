@@ -1,5 +1,6 @@
 import LandingPage from '@/components/LandingPage'
 import PollutionChatBot from '@/components/PollutionChatbot'
+import Warning from '@/components/Warning'
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
 
 <LandingPage/>
 <PollutionChatBot/>
-
+<Warning/>
 </div>
 </>
   );

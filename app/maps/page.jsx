@@ -48,7 +48,6 @@ const MapPage = () => {
       });
     }
   }, []);
-
   // Simulate Real-Time Tracking
   useEffect(() => {
     if (currentLocation) {

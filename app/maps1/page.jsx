@@ -4,10 +4,14 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useLoadScript, Autocomplete } from "@react-google-maps/api";
 import axios from "axios";
+import { useAppContext } from "@/context";
 
 const libraries = ["places"];
 
 const PollutionMap = () => {
+
+  const { location,setLocation } = useAppContext();
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -19,20 +23,12 @@ const PollutionMap = () => {
   const [clickedLocationData, setClickedLocationData] = useState(null);
   const [autocomplete, setAutocomplete] = useState(null);
   const [searchLocation, setSearchLocation] = useState(null);
-  const [currentLocation, setCurrentLocation] = useState(null);
+
+
+
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setCurrentLocation({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      });
-    }
-  }, []);
-
-  useEffect(() => {
+    //fetch pollution data
     const fetchPollutionData = async () => {
       const apiKey = "eaa49a4b01b58bc2d26e2b713fdcc0ddb8de4182";
       const response = await axios.get(
@@ -48,7 +44,7 @@ const PollutionMap = () => {
         },
       ]);
     };
-
+//fetch transport data
     const fetchTransportData = async () => {
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?format=json&q=metro+station+near+Delhi`
@@ -59,7 +55,7 @@ const PollutionMap = () => {
         lon: parseFloat(loc.lon),
       })));
     };
-
+//fetch nearby hospitals
     const fetchHealthcareData = async () => {
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?format=json&q=hospital+near+Delhi`
@@ -109,15 +105,15 @@ const PollutionMap = () => {
         .addTo(map);
     });
 
-    if (currentLocation) {
-      new maplibregl.Marker({ color: "blue" })
-        .setLngLat([currentLocation.lon, currentLocation.lat])
+    if (location) {
+      new maplibregl.Marker({ color: "orange" })
+        .setLngLat([location.longitude, location.latitude])
         .setPopup(new maplibregl.Popup().setText("Your Location"))
         .addTo(map);
     }
 
     return () => map.remove();
-  }, [pollutionData, transportData, healthcareData, currentLocation]);
+  }, [pollutionData, transportData, healthcareData, location]);
 
   const onPlaceChanged = () => {
     if (autocomplete) {

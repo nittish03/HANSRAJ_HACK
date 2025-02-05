@@ -20,7 +20,7 @@ export default function Navbar() {
 
   return (
     <nav className="shadow-md bg-black flex justify-between items-center py-1 px-6 text-white font-inter fixed top-0 left-0 w-full z-50">
-      <div className="text-3xl font-extrabold font-koho text-white drop-shadow-lg">HACKATHON</div>
+      <div className="text-3xl font-extrabold font-koho text-white drop-shadow-lg">MediCare</div>
       <div className="flex gap-6 text-base">
         <NavLink href="/" className="hover:text-green-100 transition">Home</NavLink>
         <NavLink href="/dashboard" className="hover:text-green-100 transition">Dashboard</NavLink>

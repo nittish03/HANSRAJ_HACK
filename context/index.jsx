@@ -15,8 +15,8 @@ export function AppWrapper({ children }) {
         if ("geolocation" in navigator) {
             watchId = navigator.geolocation.watchPosition(
                 async (position) => {
-                    const { latitude, longitude, accuracy } = position.coords;
-                    setLocation({ latitude, longitude, accuracy });
+                    const { latitude, longitude } = position.coords;
+                    setLocation({ lat:latitude, lng:longitude });
 
                     try {
                         const response = await axios.get(
@@ -43,7 +43,7 @@ export function AppWrapper({ children }) {
             if (watchId) navigator.geolocation.clearWatch(watchId);
         };
     }, []);
-console.log(location)
+
     return (
         <AppContext.Provider value={{ location, locationError, state, setState }}>
             {children}

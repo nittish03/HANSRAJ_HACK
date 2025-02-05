@@ -5,7 +5,7 @@ import Warning from '@/components/Warning'
 export default function Home() {
   return (
 <>
-<div className="w-screen  h-[90vh] overflow-hidden ">
+<div className="overflow-hidden min-h-screen ">
 
 <LandingPage/>
 <PollutionChatBot/>

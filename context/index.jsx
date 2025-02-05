@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState, createContext, useContext } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -6,53 +6,46 @@ import toast from "react-hot-toast";
 const AppContext = createContext();
 
 export function AppWrapper({ children }) {
-    const [cartCount, setCartCount] = useState(0);
     const [location, setLocation] = useState(null);
     const [locationError, setLocationError] = useState(null);
-    const [watchId, setWatchId] = useState(null);
-
+    const [state, setState] = useState(null);
+    
     useEffect(() => {
+        let watchId;
         if ("geolocation" in navigator) {
-            const id = navigator.geolocation.watchPosition(
-                (position) => {
-                    if (position.coords.accuracy < 1000) {
-                        setLocation({
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                            accuracy: position.coords.accuracy,
-                        });
-                    } else {
-                        console.warn("Low accuracy, ignoring this location update.");
+            watchId = navigator.geolocation.watchPosition(
+                async (position) => {
+                    const { latitude, longitude, accuracy } = position.coords;
+                    setLocation({ latitude, longitude, accuracy });
+
+                    try {
+                        const response = await axios.get(
+                            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+                        );
+                        setState(response.data.address.state || "Unknown");
+                    } catch (error) {
+                        console.error("Error fetching city:", error);
+                        setState("Unknown");
                     }
                 },
                 (err) => {
                     setLocationError(err.message);
                     toast.error("Failed to get location: " + err.message);
                 },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 0,
-                }
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
             );
-            setWatchId(id);
         } else {
             setLocationError("Geolocation is not supported by this browser.");
-            toast.error("Geolocation is not supported by your browser.");
+            toast.error("Geolocation is not supported.");
         }
 
         return () => {
-            if (watchId !== null) {
-                navigator.geolocation.clearWatch(watchId);
-            }
+            if (watchId) navigator.geolocation.clearWatch(watchId);
         };
     }, []);
 
     return (
-        <AppContext.Provider value={{
-            location,
-            locationError,
-        }}>
+        <AppContext.Provider value={{ location, locationError, state, setState }}>
             {children}
         </AppContext.Provider>
     );

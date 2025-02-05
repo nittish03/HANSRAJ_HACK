@@ -24,8 +24,8 @@ export default function Navbar() {
       <div className="flex gap-6 text-base">
         <NavLink href="/" className="hover:text-green-100 transition">Home</NavLink>
         <NavLink href="/dashboard" className="hover:text-green-100 transition">Dashboard</NavLink>
-        <NavLink href="/maps" className="hover:text-green-100 transition">Maps</NavLink>
         <NavLink href="/maps1" className="hover:text-green-100 transition">Maps1</NavLink>
+        <NavLink href="/googleMaps" className="hover:text-green-100 transition">googleMaps</NavLink>
       </div>
       <div className="flex items-center">
         {session ? (

@@ -43,7 +43,7 @@ export function AppWrapper({ children }) {
             if (watchId) navigator.geolocation.clearWatch(watchId);
         };
     }, []);
-
+console.log(location)
     return (
         <AppContext.Provider value={{ location, locationError, state, setState }}>
             {children}

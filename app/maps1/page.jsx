@@ -126,7 +126,7 @@ const PollutionMap = () => {
   };
 
   return (
-    <div className="relative w-full h-screen text-black">
+    <div className="relative h-[91vh] text-black">
       {isLoaded && (
         <Autocomplete onLoad={setAutocomplete} onPlaceChanged={onPlaceChanged}>
           <input

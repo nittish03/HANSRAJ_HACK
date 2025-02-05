@@ -3,7 +3,7 @@ import React from 'react';
 
 const LandingPage = () => {
   return (
-    <div className='text-white  py-[32px] flex items-center justify-center min-h-[90vh] '>
+    <div className='text-white  py-[32px] flex items-center justify-center min-h-[91vh] '>
       <div className="container relative flex flex-col items-center">
         <div className="flex items-center justify-center">
           <a href="#" className="inline-flex gap-3 border py-1 px-2 rounded-lg border-white/30 relative overflow-clip">

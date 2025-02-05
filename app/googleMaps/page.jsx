@@ -92,12 +92,12 @@ const MapComponent = () => {
       case "school":
         return { url: "https://maps.gstatic.com/mapfiles/ms2/micons/schools.png", scaledSize: new window.google.maps.Size(40, 40) }; // Blue icon for schools
       default:
-        return { url: "https://maps.gstatic.com/mapfiles/ms2/micons/man.png", scaledSize: new window.google.maps.Size(40, 40) }; // Red icon for user location
+        return { url: "https://img.icons8.com/?size=100&id=SW3XuuLGhOrk&format=png&color=000000", scaledSize: new window.google.maps.Size(40, 40) }; // Red icon for user location
     }
   };
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative h-[91vh]">
       {isLoaded && (
         <>
           <Autocomplete onLoad={setAutocomplete} onPlaceChanged={onPlaceChanged}>
@@ -116,13 +116,13 @@ const MapComponent = () => {
             <TrafficLayer />
 
             {/* Pollution Markers */}
-            {pollutionData.map((hotspot, index) => (
+            {/* {pollutionData.map((hotspot, index) => (
               <Marker
                 key={index}
                 position={{ lat: hotspot.lat, lng: hotspot.lon }}
                 icon={getMarkerIcon("pollution")}
               />
-            ))}
+            ))} */}
 
             {/* Transport Markers */}
             {transportData.map((loc, index) => (

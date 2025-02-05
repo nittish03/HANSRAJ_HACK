@@ -1,14 +1,14 @@
 import LandingPage from '@/components/LandingPage'
-import PollutionChatBot from '@/components/PollutionChatbot'
+import ChatBot from '@/components/ChatBot'
 import Warning from '@/components/Warning'
 
 export default function Home() {
   return (
 <>
-<div className="overflow-hidden min-h-screen ">
+<div className="overflow-hidden">
 
 <LandingPage/>
-<PollutionChatBot/>
+<ChatBot/>
 <Warning/>
 </div>
 </>

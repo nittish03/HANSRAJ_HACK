@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           <AppWrapper>
             <Navbar />
             <ToastContainer
-              position="top-center"
+              position="top-right"
               autoClose={1500}
               limit={1}
               hideProgressBar={false}
@@ -32,6 +32,7 @@ export default function RootLayout({ children }) {
               theme="colored"
               transition={Flip}
             />
+            <div className="mt-12"></div>
             <main>{children}</main>
           </AppWrapper>
         </SessionWrapper>

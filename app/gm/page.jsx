@@ -86,7 +86,7 @@ export default function MapPage() {
   if (!isLoaded) return <p>Loading map...</p>;
 
   return (
-    <div className="relative">
+    <div className="relative bottom-14">
       {/* Floating Controls */}
       <div className="absolute top-32 left-36 transform -translate-x-1/2 bg-white p-4 rounded-lg shadow-lg z-10 flex flex-col gap-3">
         <Autocomplete>

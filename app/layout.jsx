@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white bg-[linear-gradient(to_bottom,#0000,#200D42_34%,#4F21A1_65%,#A46EDB_82%)] font-inter">
+      <body className="bg-black text-white font-inter">
         <SessionWrapper>
           <AppWrapper>
             <Navbar />

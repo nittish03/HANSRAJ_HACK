@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import SessionWrapper from "@/components/SessionWrapper";
 import Navbar from "@/components/Navbar";
-import { ToastContainer, Flip } from "react-toastify";
+import { ToastContainer, Slide } from "react-toastify";
 import { AppWrapper } from "@/context/index";
 
 export const metadata = {
@@ -21,16 +21,16 @@ export default function RootLayout({ children }) {
             <ToastContainer
               position="top-right"
               autoClose={1500}
-              limit={1}
+              limit={3}
               hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick={false}
+              newestOnTop={true}
+              closeOnClick={true}
               rtl={false}
               pauseOnFocusLoss
               draggable
-              pauseOnHover
+              pauseOnHover={false}
               theme="colored"
-              transition={Flip}
+              transition={Slide}
             />
             <div className="mt-12"></div>
             <main>{children}</main>

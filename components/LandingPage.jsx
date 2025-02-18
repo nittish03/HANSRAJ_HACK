@@ -9,8 +9,62 @@ import { Button } from './ui/button';
 import { OrbitingCircles } from './magicui/orbiting-circles';
 import robot from "@/assets/robot.png"
 
+import Marquee from '@/components/Marquee'
 
-
+const icons = [
+    { src: "https://skillicons.dev/icons?i=react", alt: "React logo" },
+    { src: "https://skillicons.dev/icons?i=mongodb", alt: "MongoDB logo" },
+    { src: "https://skillicons.dev/icons?i=express", alt: "Express logo" },
+    { src: "https://skillicons.dev/icons?i=nodejs", alt: "Node.js logo" },
+    { src: "https://skillicons.dev/icons?i=nextjs", alt: "Next.js logo" },
+    { src: "https://skillicons.dev/icons?i=bootstrap", alt: "Bootstrap logo" },
+    { src: "https://skillicons.dev/icons?i=html", alt: "HTML5 logo" },
+    { src: "https://skillicons.dev/icons?i=css", alt: "CSS3 logo" },
+    { src: "https://skillicons.dev/icons?i=tailwind", alt: "Tailwind CSS logo" },
+    { src: "https://skillicons.dev/icons?i=js", alt: "JavaScript logo" },
+    { src: "https://skillicons.dev/icons?i=ts", alt: "TypeScript logo" },
+    { src: "https://skillicons.dev/icons?i=java", alt: "Java logo" },
+    { src: "https://skillicons.dev/icons?i=prisma", alt: "Prisma logo" },
+    { src: "https://skillicons.dev/icons?i=cpp", alt: "C++ logo" },
+    { src: "https://skillicons.dev/icons?i=gmail", alt: "Gmail logo" },
+    { src: "https://skillicons.dev/icons?i=git", alt: "Git logo" },
+    { src: "https://skillicons.dev/icons?i=mysql", alt: "MySQL logo" },
+    { src: "https://skillicons.dev/icons?i=firebase", alt: "Firebase logo" },
+    { src: "https://skillicons.dev/icons?i=vite", alt: "Vite logo" },
+    { src: "https://skillicons.dev/icons?i=discord", alt: "Discord logo" },
+    { src: "https://skillicons.dev/icons?i=npm", alt: "NPM logo" },
+    { src: "https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/youtube/default.svg", alt: "YouTube logo" },
+    { src: "https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/discord/default.svg", alt: "Discord logo" },
+    { src: "https://skillicons.dev/icons?i=vscode", alt: "VS Code logo" },
+    { src: "https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/telegram/default.svg", alt: "Telegram logo" },
+    { src: "https://skillicons.dev/icons?i=windows", alt: "Windows logo" },
+    { src: "https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/linkedin/default.svg", alt: "LinkedIn logo" },
+    { src: "https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/visualstudio/default.svg", alt: "Visual Studio logo" },
+    {
+      img: "Instagram logo",
+      src: "https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/instagram/default.svg"
+    },
+    {
+      img: "Gmail logo",
+      src: "https://skillicons.dev/icons?i=gmail"
+    },
+    {
+      img: "WhatsApp logo",
+      src: "https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/whatsapp/default.svg"
+    },
+    {
+      img: "GitHub logo",
+      src: "https://skillicons.dev/icons?i=github"
+    },
+    {
+      img: "LinkedIn logo",
+      src: "https://skillicons.dev/icons?i=linkedin"
+    },
+    {
+      img: "Instagram logo",
+      src: "https://skillicons.dev/icons?i=instagram"
+    }
+  ];
 
 const LandingPage = () => {
   return (
@@ -88,28 +142,33 @@ const LandingPage = () => {
                         </div>
                     </Container>
                     <Container delay={0.3} className="relative">
-                        <div className="relative rounded-xl lg:rounded-[32px] border border-border p-2 backdrop-blur-lg mt-10 max-w-6xl mx-auto">
-                            <div className="absolute top-1/8 left-1/2 -z-10 bg-gradient-to-r from-sky-500 to-blue-600 w-1/2 lg:w-3/4 -translate-x-1/2 h-1/4 -translate-y-1/2 inset-0 blur-[4rem] lg:blur-[10rem] animate-image-glow"></div>
-                            <div className="hidden lg:block absolute -top-1/8 left-1/2 -z-20 bg-blue-600 w-1/4 -translate-x-1/2 h-1/4 -translate-y-1/2 inset-0 blur-[10rem] animate-image-glow"></div>
-
-                            <div className="rounded-lg lg:rounded-[22px] border border-border bg-background">
-                                <Image
-                                    src="/images/dashboard.png"
-                                    alt="dashboard"
-                                    width={1920}
-                                    height={1080}
-                                    className="rounded-lg lg:rounded-[20px]"
-                                />
-                            </div>
-
-                        </div>
+                    <div className="relative flex items-center justify-center pt-20 w-full">
+                <div className="absolute top-1/2 left-1/2 -z-10 gradient w-3/4 -translate-x-1/2 h-3/4 -translate-y-1/2 inset-0 blur-[10rem]"></div>
+                <div className="-m-2 rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl text-center flex justify-center  items-center">
+                  <Image
+                    src={robot}
+                    alt="banner image"
+                    width={1080} // Reduced size
+                    height={1920} // Reduced size
+                    quality={100}
+                    className="rounded-md w-100 h-100  lg:rounded-xl bg-foreground/10 shadow-2xl overflow-hidden ring-1 ring-border"
+                    
+                  />
+                </div>
+                
+              </div>
                         <div className="bg-gradient-to-t from-background to-transparent absolute bottom-0 inset-x-0 w-full h-1/2"></div>
                     </Container>
+                    <div className='mt-5'>
 
+                    <Marquee items={icons} speed={10} reverse={false} pauseOnHover />
+                    </div>
                 </div>
+
             </div>
         </div>
     )
 };
 
 export default LandingPage
+

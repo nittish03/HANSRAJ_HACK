@@ -25,7 +25,7 @@ const PollutionChatbot = () => {
       return data.response || "I couldn't find specific information about that pollution topic.";
     } catch (error) {
       setIsLoading(false);
-      return "I'm having trouble processing your query about pollution.";
+      return "couldn't respond";
     }
   };
 

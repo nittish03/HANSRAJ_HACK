@@ -15,21 +15,21 @@ const TestimonialMarquee = ({
   ];
 
   return (
-    <div className="overflow-hidden relative w-full bg-black text-white py-4">
-      <div
-        className="flex whitespace-nowrap"
-        style={{
-          animation: `marquee ${speed}s linear infinite ${reverse ? "reverse" : ""}`,
-        }}
-      >
-        {items.concat(items).map((item, index) => (
+    <div className="overflow-hidden relative w-full bg-gradient-to-r from-gray-900 to-black text-white py-8">
+      <div className="flex whitespace-nowrap items-center" style={{ animation: `marquee ${speed}s linear infinite ${reverse ? "reverse" : ""}` }}>
+        {items.concat(items).concat(items).map((item, index) => (
           <div
             key={index}
-            className="bg-[#111] text-white p-4 rounded-lg mx-2 min-w-[300px] hover:shadow-lg"
+            className="bg-[#111] text-white p-6 rounded-lg mx-4 min-w-[220px] h-[220px] shadow-md transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col justify-between"
           >
-            <p className="font-bold">{item.name}</p>
-            <p className="text-gray-400">@{item.username}</p>
-            <p className="mt-2">{item.message}</p>
+            <div className="flex items-center flex-wrap mb-2">
+              <span className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center mr-3">👤</span>
+              <div>
+                <p className="font-semibold">{item.name}</p>
+                <p className="text-gray-400 text-sm">@{item.username}</p>
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed flex justify-center items-center flex-wrap">{item.message}</p>
           </div>
         ))}
       </div>
@@ -38,7 +38,7 @@ const TestimonialMarquee = ({
         {`
           @keyframes marquee {
             from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+            to { transform: translateX(-33.33%); }
           }
           .hover-pause:hover { animation-play-state: ${pauseOnHover ? "paused" : "running"}; }
         `}

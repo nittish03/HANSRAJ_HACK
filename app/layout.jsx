@@ -5,7 +5,7 @@ import SessionWrapper from "@/components/SessionWrapper";
 import Navbar from "@/components/Navbar";
 import { ToastContainer, Slide } from "react-toastify";
 import { AppWrapper } from "@/context/index";
-import Footer from '@/components/Footer';
+
 
 export const metadata = {
   title: "Create Next App",
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
             />
             <div className="mt-12"></div>
             <main>{children}</main>
-            <Footer />
+          
           </AppWrapper>
         </SessionWrapper>
       </body>

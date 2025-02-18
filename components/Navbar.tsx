@@ -24,7 +24,7 @@ export default function Navbar() {
     <div className="px-4 h-14 sticky top-0 inset-x-0 w-full bg-background/40 backdrop-blur-lg z-50">
       <div className="flex items-center justify-between h-full mx-auto md:max-w-screen-xl">
         <div className="flex items-center">
-          <span className="text-lg font-medium">FRONTEND</span>
+          <span className="text-lg font-medium">Techmac</span>
         </div>
 
         {/* Mobile Menu Toggle */}

@@ -39,7 +39,7 @@ export default function Navbar() {
         <ul className="hidden md:flex items-center gap-8 ">
           {[
             { name: "Home", href: "/" },
-            { name: "gm", href: "/gm" },
+            { name: "Map", href: "/gm" },
             { name: "demo", href: "/demo" },
           ].map((item) => (
             <NavLink key={item.href} href={item.href} className="relative text-sm hover:text-foreground/80">

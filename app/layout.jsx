@@ -33,7 +33,6 @@ export default function RootLayout({ children }) {
               theme="colored"
               transition={Slide}
             />
-            <div className="mt-12"></div>
             <main>{children}</main>
           
           </AppWrapper>

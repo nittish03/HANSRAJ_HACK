@@ -39,7 +39,7 @@ export default function Navbar() {
         <ul className="hidden md:flex items-center gap-8 ">
           {[
             { name: "Home", href: "/" },
-            { name: "Map", href: "/gm" },
+            { name: "Map", href: "/map" },
             { name: "demo", href: "/demo" },
           ].map((item) => (
             <NavLink key={item.href} href={item.href} className="relative text-sm hover:text-foreground/80">
@@ -79,7 +79,7 @@ export default function Navbar() {
         <div className="md:hidden bg-black transition-all ease-in-out duration-200 absolute top-14 left-0 w-full bg-background/90 backdrop-blur-md shadow-md p-4 flex flex-col items-center gap-4">
           {[
             { name: "Home", href: "/" },
-            { name: "gm", href: "/gm" },
+            { name: "Map", href: "/map" },
             { name: "demo", href: "/demo" },
           ].map((item) => (
             <NavLink key={item.href} href={item.href} className="text-sm hover:text-foreground/80" onClick={() => setMenuOpen(false)}>

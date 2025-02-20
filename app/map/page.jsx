@@ -91,27 +91,24 @@ export default function Map() {
   const onMapClick = (event) => {
     const location = { lat: event.latLng.lat(), lng: event.latLng.lng() };
     setClickedLocations((prev) => [...prev, location]);
-    endRef.current.value = `Lat: ${location.lat.toFixed(4)}, Lng: ${location.lng.toFixed(4)}`;
+    endRef.current.value = `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`;
     toast.info("Waypoint/Destination Added");
   };
 
   const getRoute = () => {
-    const startPoint = startRef.current.value || (userLocation ? userLocation : null);
-    if (!startPoint) {
-      return toast.error("Could not determine the start location.");
-    }
-
-    if (!endRef.current.value && clickedLocations.length === 0) {
-      return toast.error("Please enter a destination or click on the map!");
-    }
-
     if (!window.google || !window.google.maps) {
       return toast.error("Google Maps API not loaded correctly.");
     }
 
     const directionsService = new google.maps.DirectionsService();
+    const startPoint = userLocation || defaultCenter;
+    
+    if (!clickedLocations.length) {
+      return toast.error("Please select a destination!");
+    }
+
     const waypoints = clickedLocations.slice(0, -1).map((wp) => ({ location: wp, stopover: true }));
-    const destination = clickedLocations.length > 0 ? clickedLocations[clickedLocations.length - 1] : endRef.current.value;
+    const destination = clickedLocations[clickedLocations.length - 1];
 
     const routeOptions = {
       origin: startPoint,
@@ -162,31 +159,14 @@ export default function Map() {
           }
         }}
       >
-        {/* User Location Marker - BLUE */}
-        {userLocation && (
-          <Marker
-            position={userLocation}
-            title="Your Location"
-            icon={{
-              url: "https://img.icons8.com/?size=100&id=mS9pBfA4hgaF&format=png&color=000000",
-              scaledSize: new window.google.maps.Size(40, 40),
-            }}
-          />
-        )}
-
-        {/* Nearby Hospitals - ❌ Red Cross */}
-        {nearbyHospitals.map((place, idx) => (
-          <Marker
-            key={idx}
-            position={place.geometry.location}
-            title={place.name}
-            icon={{
-              url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Red_Cross.svg/32px-Red_Cross.svg.png",
-              scaledSize: new window.google.maps.Size(40, 40),
-            }}
-          />
+        {userLocation && <Marker position={userLocation} title="Your Location" />}
+        {clickedLocations.map((loc, idx) => (
+          <Marker key={idx} position={loc} title={`Waypoint ${idx + 1}`} />
         ))}
-
+        {nearbyHospitals.map((place, idx) => (
+          <Marker key={idx} position={place.geometry.location} title={place.name} />
+        ))}
+        {directions && <DirectionsRenderer directions={directions} />}
         <TrafficLayer />
       </GoogleMap>
     </div>

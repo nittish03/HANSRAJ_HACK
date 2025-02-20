@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  const genAI = new GoogleGenerativeAI("AIzaSyBxyRP3FFAPJ8wEVfWgALSPK5SceMpUJds");
+  const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 
   try {
     const { hair_type, scalp_type } = await req.json();

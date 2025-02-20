@@ -96,7 +96,13 @@ export default function Map() {
   };
 
   const onMarkerClick = (index) => {
-    setClickedLocations((prev) => prev.filter((_, i) => i !== index));
+    setClickedLocations((prev) => {
+      const newLocations = prev.filter((_, i) => i !== index);
+      if (newLocations.length === 0) {
+        setDirections(null); // Clear route if all waypoints are removed
+      }
+      return newLocations;
+    });
     toast.info("Waypoint Removed");
   };
 

@@ -95,6 +95,11 @@ export default function Map() {
     toast.info("Waypoint/Destination Added");
   };
 
+  const onMarkerClick = (index) => {
+    setClickedLocations((prev) => prev.filter((_, i) => i !== index));
+    toast.info("Waypoint Removed");
+  };
+
   const getRoute = () => {
     if (!window.google || !window.google.maps) {
       return toast.error("Google Maps API not loaded correctly.");
@@ -161,7 +166,7 @@ export default function Map() {
       >
         {userLocation && <Marker position={userLocation} title="Your Location" />}
         {clickedLocations.map((loc, idx) => (
-          <Marker key={idx} position={loc} title={`Waypoint ${idx + 1}`} />
+          <Marker key={idx} position={loc} title={`Waypoint ${idx + 1}`} onClick={() => onMarkerClick(idx)} />
         ))}
         {nearbyHospitals.map((place, idx) => (
           <Marker key={idx} position={place.geometry.location} title={place.name} />

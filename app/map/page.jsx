@@ -39,8 +39,8 @@ export default function Map() {
   const [isSatellite, setIsSatellite] = useState(false);
   const [nearbyHospitals, setNearbyHospitals] = useState([]);
 
-  const startRef = useRef();
-  const endRef = useRef();
+  const startRef = useRef(null);
+  const endRef = useRef(null);
 
   useEffect(() => {
     fetchUserLocation();
@@ -91,18 +91,20 @@ export default function Map() {
   const onMapClick = (event) => {
     const location = { lat: event.latLng.lat(), lng: event.latLng.lng() };
     setClickedLocations((prev) => [...prev, location]);
-    endRef.current.value = `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`;
     toast.info("Waypoint/Destination Added");
   };
 
-  const onMarkerClick = (index) => {
+  const onMarkerClick = (location) => {
     setClickedLocations((prev) => {
-      const newLocations = prev.filter((_, i) => i !== index);
+      const newLocations = prev.filter((loc) => loc.lat !== location.lat || loc.lng !== location.lng);
+
       if (newLocations.length === 0) {
         setDirections(null); // Clear route if all waypoints are removed
       }
+
       return newLocations;
     });
+
     toast.info("Waypoint Removed");
   };
 
@@ -113,7 +115,7 @@ export default function Map() {
 
     const directionsService = new google.maps.DirectionsService();
     const startPoint = userLocation || defaultCenter;
-    
+
     if (!clickedLocations.length) {
       return toast.error("Please select a destination!");
     }
@@ -145,12 +147,43 @@ export default function Map() {
   return (
     <div>
       <div className="absolute top-40 left-4 z-10 bg-white p-4 rounded-lg shadow-lg flex flex-col">
-        <Autocomplete>
-          <input ref={startRef} placeholder="Enter start location" className="p-2 border rounded text-black w-64" />
+        <Autocomplete
+          onLoad={(auto) => (startRef.current = auto)}
+          onPlaceChanged={() => {
+            const place = startRef.current.getPlace();
+            if (place.geometry) {
+              setUserLocation({
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng(),
+              });
+            }
+          }}
+        >
+          <input
+            placeholder="Enter start location"
+            className="p-2 border rounded text-black w-64"
+          />
         </Autocomplete>
-        <Autocomplete>
-          <input ref={endRef} placeholder="Enter destination" className="p-2 border rounded text-black w-64" />
+
+        <Autocomplete
+          onLoad={(auto) => (endRef.current = auto)}
+          onPlaceChanged={() => {
+            const place = endRef.current.getPlace();
+            if (place.geometry) {
+              const destination = {
+                lat: place.geometry.location.lat(),
+                lng: place.geometry.location.lng(),
+              };
+              setClickedLocations([destination]); // Set final destination
+            }
+          }}
+        >
+          <input
+            placeholder="Enter destination"
+            className="p-2 border rounded text-black w-64"
+          />
         </Autocomplete>
+
         <button onClick={getRoute} className="px-4 py-2 bg-blue-500 text-white rounded mt-2">Get Route</button>
         <button onClick={() => setIsSatellite((prev) => !prev)} className="px-4 py-2 bg-gray-500 text-white rounded mt-2">
           {isSatellite ? "Switch to Default Mode" : "Switch to Satellite Mode"}
@@ -172,7 +205,7 @@ export default function Map() {
       >
         {userLocation && <Marker position={userLocation} title="Your Location" />}
         {clickedLocations.map((loc, idx) => (
-          <Marker key={idx} position={loc} title={`Waypoint ${idx + 1}`} onClick={() => onMarkerClick(idx)} />
+          <Marker key={idx} position={loc} title={`Waypoint ${idx + 1}`} onClick={() => onMarkerClick(loc)} />
         ))}
         {nearbyHospitals.map((place, idx) => (
           <Marker key={idx} position={place.geometry.location} title={place.name} />

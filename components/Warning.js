@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Bell, AlertTriangleIcon } from "lucide-react";
+import { Bell, AlertTriangleIcon,MessageCircleIcon, BellIcon } from "lucide-react";
 
 const SOS = ({ sendSOS }) => {
   const [showSOSModal, setShowSOSModal] = useState(false);
@@ -24,6 +24,7 @@ const SOS = ({ sendSOS }) => {
 
   return (
     <div>
+
       {showAlert && (
         <div className="fixed top-4 right-4 z-50 bg-red-600 text-white p-4 rounded-lg shadow-lg flex items-center animate-pulse">
           <AlertTriangleIcon className="mr-2 h-8 w-8" />
@@ -39,13 +40,16 @@ const SOS = ({ sendSOS }) => {
         </div>
       )}
 
-      <div className="fixed bottom-4 right-20 z-50">
-        <button
-          onClick={() => setShowSOSModal(true)}
-          className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-110"
-        >
-          <Bell size={24} />
-        </button>
+      <div className="fixed bottom-4 right-4 z-40">
+      <div className="relative group">
+      <button onClick={()=>{setShowSOSModal(true)}} className="w-12 h-12 rounded-full border-none bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center shadow-lg cursor-pointer transition-transform hover:animate-[jello_0.7s]">
+<BellIcon size={24} />
+      </button>
+      <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-xs px-2 py-1 rounded-md transition-all duration-300">
+        SOS
+        <span className="absolute left-1/2 -translate-x-1/2 bottom-[-4px] w-2 h-2 bg-pink-500 rotate-45"></span>
+      </span>
+    </div>
       </div>
 
       {showSOSModal && (

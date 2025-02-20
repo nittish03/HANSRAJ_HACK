@@ -25,7 +25,7 @@ const PollutionChatbot = () => {
       return data.response || "I couldn't find specific information about that pollution topic.";
     } catch (error) {
       setIsLoading(false);
-      return "couldn't respond";
+      return "I'm having trouble processing your query about pollution.";
     }
   };
 
@@ -43,18 +43,24 @@ const PollutionChatbot = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-4 right-20 z-50">
       {!isOpen && (
-        <button 
-          onClick={() => setIsOpen(true)}
-          className="bg-purple-500 text-black p-3 rounded-full shadow-lg hover:bg-purple-600 transition-all border border-black"
-        >
-          <MessageCircleIcon size={24} />
-        </button>
+        <div className="relative group">
+      <button
+      onClick={()=>{setIsOpen(true)}}
+      className="w-12 h-12 rounded-full border-none bg-gradient-to-r from-yellow-400 to-red-500 flex items-center justify-center shadow-lg cursor-pointer transition-transform hover:animate-[jello_0.7s]">
+      <MessageCircleIcon size={24} />
+
+      </button>
+      <span className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-yellow-400 to-red-500 text-white text-xs px-2 py-1 rounded-md transition-all duration-300">
+        Chat
+        <span className="absolute left-1/2 -translate-x-1/2 bottom-[-4px] w-2 h-2 bg-red-500 rotate-45"></span>
+      </span>
+    </div>
       )}
 
       {isOpen && (
-        <div className="fixed bottom-4 right-4 w-80 h-[500px] bg-white rounded-lg shadow-xl border border-black flex flex-col">
+        <div className="fixed bottom-4 right-20 w-80 h-[500px] bg-white rounded-lg shadow-xl border border-black flex flex-col">
           <div className="bg-purple-500 text-black p-3 flex justify-between items-center rounded-t-lg">
             <h3 className="font-bold">Chatbot</h3>
             <button onClick={() => setIsOpen(false)}>

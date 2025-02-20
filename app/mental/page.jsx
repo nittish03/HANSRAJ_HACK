@@ -1,6 +1,8 @@
 "use client"
+
 import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function MentalHealthPage() {
   const [query, setQuery] = useState("mental health");
@@ -8,7 +10,6 @@ export default function MentalHealthPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // 🎥 Function to Fetch Videos from RapidAPI (YouTube)
   const fetchVideos = async () => {
     setLoading(true);
     setError("");
@@ -19,14 +20,13 @@ export default function MentalHealthPage() {
         {
           method: "GET",
           headers: {
-            "X-RapidAPI-Key": "07e5d46e34mshe5b2df679e69cddp174576jsndbc5d50b1f49", // 🔴 Replace with your API Key
+            "X-RapidAPI-Key": "YOUR_API_KEY", 
             "X-RapidAPI-Host": "youtube-search-and-download.p.rapidapi.com",
           },
         }
       );
 
       const data = await response.json();
-
       if (!data || !data.contents) {
         throw new Error("Invalid API response");
       }
@@ -47,24 +47,31 @@ export default function MentalHealthPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      {/* 🎥 YouTube Video Search */}
-      <h1 className="text-3xl font-bold text-center mb-6">🎥 Mental Health Videos</h1>
+    <div className="max-w-6xl mx-auto p-6 space-y-10">
+      <motion.h1 
+        className="text-4xl font-bold text-center text-blue-600" 
+        initial={{ opacity: 0, y: -20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.8 }}
+      >
+        🎥 Mental Health Videos
+      </motion.h1>
 
-      <div className="flex justify-center mb-4">
+      <div className="flex justify-center gap-2">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search mental health topics..."
-          className="p-2 border rounded-lg w-1/2"
+          className="p-3 border rounded-lg w-2/3 shadow-md"
         />
-        <button
+        <motion.button
           onClick={fetchVideos}
-          className="ml-2 p-2 bg-blue-500 text-white rounded-lg"
+          className="p-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700"
+          whileTap={{ scale: 0.95 }}
         >
           Search
-        </button>
+        </motion.button>
       </div>
 
       {loading && <p className="text-center text-gray-500">Loading videos...</p>}
@@ -72,46 +79,70 @@ export default function MentalHealthPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {videos.map((video, index) => (
-          <div key={index} className="p-4 bg-gray-100 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold">{video.title}</h2>
+          <motion.div 
+            key={index} 
+            className="p-4 bg-gray-100 rounded-lg shadow-lg"
+            whileHover={{ scale: 1.05 }}
+          >
+            <h2 className="text-lg font-semibold">{video.title}</h2>
             <iframe
               width="100%"
               height="200"
               src={`https://www.youtube.com/embed/${video.videoId}`}
               frameBorder="0"
               allowFullScreen
-              className="mt-2"
+              className="mt-2 rounded-lg"
             ></iframe>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {/* 🎤 Static Mental Health Interviews */}
-      <h1 className="text-3xl font-bold text-center mt-10 mb-6">🎤 Mental Health Interviews</h1>
-
+      <motion.h1 
+        className="text-4xl font-bold text-center mt-10 text-green-600" 
+        initial={{ opacity: 0, y: -20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.8 }}
+      >
+        🎤 Mental Health Interviews
+      </motion.h1>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {interviewVideos.map((video, index) => (
-          <div key={index} className="p-4 bg-gray-100 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-black">{video.title}</h2>
+          <motion.div 
+            key={index} 
+            className="p-4 bg-gray-100 rounded-lg shadow-lg"
+            whileHover={{ scale: 1.05 }}
+          >
+            <h2 className="text-lg font-semibold text-black">{video.title}</h2>
             <iframe
               width="100%"
               height="200"
               src={`https://www.youtube.com/embed/${video.videoId}`}
               frameBorder="0"
               allowFullScreen
-              className="mt-2"
+              className="mt-2 rounded-lg"
             ></iframe>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {/* 📰 Blog Section */}
-      <h1 className="text-3xl font-bold text-center mt-10 mb-6">📰 Mental Health Blog</h1>
+      <motion.h1 
+        className="text-4xl font-bold text-center mt-10 text-purple-600" 
+        initial={{ opacity: 0, y: -20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.8 }}
+      >
+        📰 Mental Health Blog
+      </motion.h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {articles.map((article, index) => (
-          <div key={index} className="p-4 bg-gray-100 rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold text-black">{article.title}</h2>
+          <motion.div 
+            key={index} 
+            className="p-4 bg-gray-100 rounded-lg shadow-lg"
+            whileHover={{ scale: 1.05 }}
+          >
+            <h2 className="text-lg font-semibold text-black">{article.title}</h2>
             <p className="mt-2 text-gray-700">{article.summary}</p>
             <Link
               href={article.link}
@@ -121,63 +152,22 @@ export default function MentalHealthPage() {
             >
               Read more
             </Link>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
   );
 }
 
-// 🎤 Static Interview Videos
 const interviewVideos = [
-  {
-    title: "The Power of Vulnerability | Brené Brown | TEDxHouston",
-    videoId: "iCvmsMzlF7o",
-  },
-  {
-    title: "How to Make Stress Your Friend | Kelly McGonigal | TED",
-    videoId: "RcGyVTAoXEU",
-  },
-  {
-    title: "How to Cope with Anxiety | A Psychologist's Guide",
-    videoId: "WWloIAQpMcQ",
-  },
-  {
-    title: "Depression, the Secret We Share | Andrew Solomon | TED",
-    videoId: "ezVib_giTFo",
-  },
+  { title: "The Power of Vulnerability | Brené Brown", videoId: "iCvmsMzlF7o" },
+  { title: "How to Make Stress Your Friend | Kelly McGonigal", videoId: "RcGyVTAoXEU" },
+  { title: "How to Cope with Anxiety", videoId: "WWloIAQpMcQ" },
+  { title: "Depression, the Secret We Share | Andrew Solomon", videoId: "ezVib_giTFo" },
 ];
 
-// 📰 Blog Articles
 const articles = [
-  {
-    title: "Managing Anxiety: Tips & Techniques",
-    summary: "Explore effective strategies to manage anxiety in daily life.",
-    link: "https://www.thetimes.co.uk/article/anxiety-expert-addiction-advice-tips-jf95kdmj9",
-  },
-  {
-    title: "Self-Care for Mental Well-being",
-    summary: "Discover self-care practices to enhance your mental health.",
-    link: "https://www.helpguide.org/mental-health/wellbeing/self-care-tips-to-prioritize-your-mental-health",
-  },
-  {
-    title: "Personal Story: Overcoming Life's Crises",
-    summary: "Read about one individual's journey through personal challenges.",
-    link: "https://www.theguardian.com/society/2025/feb/16/my-whole-life-has-been-one-dramatic-crisis-after-another",
-  },
-  {
-    title: "The Benefits of Junk Journaling",
-    summary: "Learn how junk journaling can be a therapeutic self-care activity.",
-    link: "https://www.verywellmind.com/i-tried-junk-journaling-for-a-month-11679873",
-  },
-  {
-    title: "Caring for Your Mental Health",
-    summary: "Comprehensive guide on maintaining mental health through self-care.",
-    link: "https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health",
-  },
-  {
-    title: "How to Cope with Stress in a Healthy Way",
-    summary: "Learn scientifically-backed strategies to reduce stress effectively.",
-    link: "https://www.apa.org/topics/stress/healthy-strategies",
-  },
+  { title: "Managing Anxiety", summary: "Tips & techniques for daily life.", link: "https://example.com" },
+  { title: "Self-Care for Well-being", summary: "Discover self-care strategies.", link: "https://example.com" },
+  { title: "Overcoming Life Crises", summary: "Read personal experiences.", link: "https://example.com" },
 ];

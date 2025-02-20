@@ -61,7 +61,7 @@ const PollutionChatbot = () => {
 
       {isOpen && (
         <div className="fixed bottom-4 right-20 w-80 h-[500px] bg-white rounded-lg shadow-xl border border-black flex flex-col">
-          <div className="bg-purple-500 text-black p-3 flex justify-between items-center rounded-t-lg">
+          <div className="bg-blue-500 text-black p-3 flex justify-between items-center rounded-t-lg">
             <h3 className="font-bold">Chatbot</h3>
             <button onClick={() => setIsOpen(false)}>
               <X size={24} />
@@ -74,7 +74,7 @@ const PollutionChatbot = () => {
                 key={index} 
                 className={`p-2 rounded-lg max-w-[80%] ${
                   msg.sender === 'user' 
-                  ? 'bg-green-100 text-purple-800 ml-auto' 
+                  ? 'bg-green-100 text-blue-800 ml-auto' 
                   : 'bg-gray-100 text-gray-800 mr-auto'
                 }`}
               >
@@ -100,7 +100,7 @@ const PollutionChatbot = () => {
             />
             <button 
               onClick={handleSendMessage}
-              className="bg-purple-500 text-black px-3 rounded-r-lg"
+              className="bg-blue-500 text-black px-3 rounded-r-lg"
               disabled={isLoading}
             >
               <Send  size={20} />

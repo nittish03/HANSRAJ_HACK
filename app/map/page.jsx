@@ -211,7 +211,7 @@ export default function Map() {
           <Marker key={idx} position={place.geometry.location} title={place.name} />
         ))}
         {directions && <DirectionsRenderer directions={directions} />}
-        <TrafficLayer />
+        {/* <TrafficLayer /> */}
       </GoogleMap>
     </div>
   );

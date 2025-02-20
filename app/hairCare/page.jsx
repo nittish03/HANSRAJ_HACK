@@ -3,8 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function HairCareRoutine() {
-    const [hairType, setHairType] = useState("Straight");
-    const [scalpType, setScalpType] = useState("Oily");
+    const [hairType, setHairType] = useState("");
+    const [scalpType, setScalpType] = useState("");
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState("");
 
@@ -13,7 +13,7 @@ export default function HairCareRoutine() {
         setResult("");
 
         try {
-            const response = await axios.post("/api/generateRoutine", {
+            const response = await axios.post("/api/hairCare", {
                 hair_type: hairType,
                 scalp_type: scalpType,
             });
@@ -40,31 +40,25 @@ export default function HairCareRoutine() {
                 <h1 className="text-2xl font-bold mb-4">Personalized Hair Care Routine</h1>
 
                 <div className="mb-4">
-                    <label className="block mb-2 text-gray-300">Select Your Hair Type:</label>
-                    <select 
+                    <label className="block mb-2 text-gray-300">Enter Your Hair Type:</label>
+                    <input 
+                        type="text" 
                         value={hairType} 
                         onChange={(e) => setHairType(e.target.value)}
-                        className="w-full p-2 rounded-md bg-gray-700 text-white"
-                    >
-                        <option value="Straight">Straight</option>
-                        <option value="Wavy">Wavy</option>
-                        <option value="Curly">Curly</option>
-                        <option value="Coily">Coily</option>
-                    </select>
+                        placeholder="e.g., Straight, Wavy, Curly, Coily"
+                        className="w-full p-2 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                    />
                 </div>
 
                 <div className="mb-4">
-                    <label className="block mb-2 text-gray-300">Select Your Scalp Type:</label>
-                    <select 
+                    <label className="block mb-2 text-gray-300">Enter Your Scalp Type:</label>
+                    <input 
+                        type="text" 
                         value={scalpType} 
                         onChange={(e) => setScalpType(e.target.value)}
-                        className="w-full p-2 rounded-md bg-gray-700 text-white"
-                    >
-                        <option value="Oily">Oily</option>
-                        <option value="Dry">Dry</option>
-                        <option value="Normal">Normal</option>
-                        <option value="Sensitive">Sensitive</option>
-                    </select>
+                        placeholder="e.g., Oily, Dry, Normal, Sensitive"
+                        className="w-full p-2 rounded-md bg-gray-700 text-white placeholder-gray-400"
+                    />
                 </div>
 
                 <button 

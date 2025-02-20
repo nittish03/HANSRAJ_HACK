@@ -1,10 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Send, Loader2 } from "lucide-react";
 
 export default function ChatMindCare() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -33,33 +39,34 @@ export default function ChatMindCare() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4 bg-black rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold text-center mb-4">MindCare Chat</h2>
-      <div className="h-64 overflow-y-auto bg-white p-3 border rounded">
+    <div className="max-w-lg mx-auto p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-lg text-white">
+      <h2 className="text-2xl font-bold text-center mb-4">🧠 MindCare Chat</h2>
+      <div className="h-80 overflow-y-auto bg-gray-700 p-4 border border-gray-600 rounded-lg space-y-2">
         {messages.map((msg, index) => (
-          <div key={index} className={`p-2 ${msg.sender === "user" ? "text-right" : "text-left"}`}>
-            <span className={`inline-block px-3 py-1 rounded-lg ${msg.sender === "user" ? "bg-blue-500 text-black" : "bg-gray-300 text-black"}`}>
+          <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
+            <span className={`px-4 py-2 rounded-lg shadow-md text-sm ${msg.sender === "user" ? "bg-blue-500" : "bg-gray-500"}`}>
               {msg.text}
             </span>
           </div>
         ))}
-        {loading && <p className="text-black text-sm text-center mt-2">Typing...</p>}
+        {loading && <p className="text-gray-400 text-sm text-center animate-pulse">Typing...</p>}
+        <div ref={chatEndRef}></div>
       </div>
-      <div className="flex mt-3">
+      <div className="flex mt-4 gap-2">
         <input 
           type="text"
-          className="flex-1 p-2 text-black border rounded-l"
+          className="flex-1 p-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
           placeholder="Type your message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
         <button 
-          className="bg-blue-500 text-black px-4 py-2 rounded-r disabled:opacity-50"
+          className="bg-blue-500 p-3 rounded-lg shadow-md hover:bg-blue-600 transition disabled:opacity-50 flex items-center"
           onClick={sendMessage}
           disabled={loading}
         >
-          Send
+          {loading ? <Loader2 className="animate-spin" /> : <Send />}
         </button>
       </div>
     </div>

@@ -20,18 +20,6 @@ export async function POST(req) {
       You are a hair care expert AI.
       Your role is to provide a personalized hair care routine and product recommendations based on hair type and scalp type.
 
-      Hair types:
-      - Straight
-      - Wavy
-      - Curly
-      - Coily
-
-      Scalp types:
-      - Oily
-      - Dry
-      - Normal
-      - Sensitive
-
       Routine should include:
       - Washing frequency
       - Recommended shampoo and conditioner
@@ -46,7 +34,7 @@ export async function POST(req) {
     `;
 
     const result = await model.generateContent(prompt);
-    const responseText = await result.response.text();
+    const responseText = result.response.text();
 
     return NextResponse.json({ routine: responseText });
   } catch (error) {

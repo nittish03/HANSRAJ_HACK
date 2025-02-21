@@ -1,33 +1,32 @@
 "use client";
 import { useState } from "react";
-import bird from "@/assests/audio/birds-19624.mp3"
 
 export default function CalmingSounds() {
   // 🎵 List of calming audio tracks
   const audioTracks = [
     {
       title: "🌊 Ocean Waves",
-      src: "", // 🔴 Replace with actual file URL
+      src: "/assets/audio/ocean-waves.mp3",
     },
     {
       title: "🌿 Forest Birds",
-      src: {bird},
+      src: "/assets/audio/bird.mp3", // ✅ Correct path for Next.js public assets
     },
     {
       title: "🔥 Campfire Sounds",
-      src: "/audio/campfire.mp3",
+      src: "/assets/audio/campfire.mp3",
     },
     {
       title: "🌧️ Rain Sounds",
-      src: "/audio/rain.mp3",
+      src: "/assets/audio/rain.mp3",
     },
     {
       title: "🎧 ASMR Whispering",
-      src: "/audio/asmr-whisper.mp3",
+      src: "/assets/audio/asmr-whisper.mp3",
     },
     {
       title: "🎵 White Noise",
-      src: "/audio/white-noise.mp3",
+      src: "/assets/audio/white-noise.mp3",
     },
   ];
 

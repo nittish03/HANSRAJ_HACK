@@ -12,7 +12,7 @@ const recommendedVideos = [
   { title: "How to Make Stress Your Friend | Kelly McGonigal", videoId: "RcGyVTAoXEU" },
   { title: "Overcoming Depression", videoId: "ezVib_giTFo" },
   { title: "Meditation for Mental Health", videoId: "inpok4MKVLM" },
-  { title: "How to Cope with Anxiety", videoId: "yUizkS9Tqvs" }
+  { title: "How to Cope with Anxiety", videoId: "WWloIAQpMcQ" }
 ];
 
 export default function MentalHealthPage() {

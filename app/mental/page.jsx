@@ -1,18 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 const YOUTUBE_API_KEY = process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
 
+const recommendedVideos = [
+  { title: "Understanding Anxiety", videoId: "WWloIAQpMcQ" },
+  { title: "The Power of Vulnerability | Brené Brown", videoId: "iCvmsMzlF7o" },
+  { title: "How to Make Stress Your Friend | Kelly McGonigal", videoId: "RcGyVTAoXEU" },
+  { title: "Overcoming Depression", videoId: "ezVib_giTFo" },
+  { title: "Meditation for Mental Health", videoId: "inpok4MKVLM" },
+  { title: "How to Cope with Anxiety", videoId: "yUizkS9Tqvs" }
+];
+
 export default function MentalHealthPage() {
-  const [query, setQuery] = useState("mental health");
-  const [videos, setVideos] = useState([]);
+  const [query, setQuery] = useState("");
+  const [videos, setVideos] = useState(recommendedVideos);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const fetchVideos = async () => {
+    if (!query) return;
     setLoading(true);
     setError("");
 
@@ -63,7 +73,7 @@ export default function MentalHealthPage() {
         />
         <motion.button
           onClick={fetchVideos}
-          className="p-4 bg-blue-600 text-black font-semibold rounded-lg shadow-md hover:bg-blue-800 transition-all"
+          className="p-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 transition-all"
           whileTap={{ scale: 0.95 }}
         >
           Search

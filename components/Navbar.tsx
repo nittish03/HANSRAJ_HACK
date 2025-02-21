@@ -85,7 +85,7 @@ export default function Navbar() {
             { name: "Map", href: "/map" },
             { name: "HairCareRoutine", href: "/hairCare" },
             { name: "MindCare", href: "/mindCare" },
-            { name: "Mental", href: "/mental" },
+            { name: "HealSpace", href: "/healSpace" },
             { name: "Mental2", href: "/mental2" },
           ].map((item) => (
             <NavLink key={item.href} href={item.href} className="text-sm hover:text-foreground/80" onClick={() => setMenuOpen(false)}>

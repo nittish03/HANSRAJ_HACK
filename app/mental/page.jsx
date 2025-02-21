@@ -167,7 +167,34 @@ const interviewVideos = [
 ];
 
 const articles = [
-  { title: "Managing Anxiety", summary: "Tips & techniques for daily life.", link: "https://example.com" },
-  { title: "Self-Care for Well-being", summary: "Discover self-care strategies.", link: "https://example.com" },
-  { title: "Overcoming Life Crises", summary: "Read personal experiences.", link: "https://example.com" },
+  {
+    title: "Managing Anxiety: Tips & Techniques",
+    summary: "Explore effective strategies to manage anxiety in daily life.",
+    link: "https://www.thetimes.co.uk/article/anxiety-expert-addiction-advice-tips-jf95kdmj9",
+  },
+  {
+    title: "Self-Care for Mental Well-being",
+    summary: "Discover self-care practices to enhance your mental health.",
+    link: "https://www.helpguide.org/mental-health/wellbeing/self-care-tips-to-prioritize-your-mental-health",
+  },
+  {
+    title: "Personal Story: Overcoming Life's Crises",
+    summary: "Read about one individual's journey through personal challenges.",
+    link: "https://www.theguardian.com/society/2025/feb/16/my-whole-life-has-been-one-dramatic-crisis-after-another",
+  },
+  {
+    title: "The Benefits of Junk Journaling",
+    summary: "Learn how junk journaling can be a therapeutic self-care activity.",
+    link: "https://www.verywellmind.com/i-tried-junk-journaling-for-a-month-11679873",
+  },
+  {
+    title: "Caring for Your Mental Health",
+    summary: "Comprehensive guide on maintaining mental health through self-care.",
+    link: "https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health",
+  },
+  {
+    title: "How to Cope with Stress in a Healthy Way",
+    summary: "Learn scientifically-backed strategies to reduce stress effectively.",
+    link: "https://www.apa.org/topics/stress/healthy-strategies",
+  },
 ];

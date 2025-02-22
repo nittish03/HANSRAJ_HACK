@@ -32,7 +32,7 @@ export async function POST(req) {
     `;
 
     const result = await model.generateContent(prompt);
-    const responseText = await result.response.text();
+    const responseText = result.response.text();
 
     return NextResponse.json({ response: responseText });
   } catch (error) {

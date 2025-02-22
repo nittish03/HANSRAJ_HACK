@@ -40,10 +40,12 @@ export default function Navbar() {
           {[
             { name: "Home", href: "/" },
             { name: "Map", href: "/map" },
-            { name: "HairCareRoutine", href: "/hairCare" },
+            { name: "HairCare", href: "/hairCare" },
             { name: "MindCare", href: "/mindCare" },
-            { name: "Mental", href: "/mental" },
-            { name: "Mental2", href: "/mental2" },
+            { name: "HealSpace", href: "/healSpace" },
+            { name: "RelaxHub", href: "/RelaxHub" },
+            { name: "MomGuide", href: "/MomGuide" },
+            { name: "BabyBites", href: "/BabyBites" },
           ].map((item) => (
             <NavLink key={item.href} href={item.href} className="relative text-sm hover:text-foreground/80">
               <span className={
@@ -83,10 +85,12 @@ export default function Navbar() {
           {[
             { name: "Home", href: "/" },
             { name: "Map", href: "/map" },
-            { name: "HairCareRoutine", href: "/hairCare" },
+            { name: "HairCare", href: "/hairCare" },
             { name: "MindCare", href: "/mindCare" },
             { name: "HealSpace", href: "/healSpace" },
-            { name: "Mental2", href: "/mental2" },
+            { name: "RelaxHub", href: "/RelaxHub" },
+            { name: "MomGuide", href: "/MomGuide" },
+            { name: "BabyBites", href: "/BabyBites" },
           ].map((item) => (
             <NavLink key={item.href} href={item.href} className="text-sm hover:text-foreground/80" onClick={() => setMenuOpen(false)}>
               <span className={

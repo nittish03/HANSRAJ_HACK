@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function Relaxation() {
-  const [breathText, setBreathText] = useState("Inhale...");
-  const [breathCycle, setBreathCycle] = useState(0);
   const [affirmationIndex, setAffirmationIndex] = useState(0);
+  const [currentTrack, setCurrentTrack] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const affirmations = [
     "💖 I am strong, resilient, and capable.",
@@ -17,19 +17,9 @@ export default function Relaxation() {
   ];
 
   useEffect(() => {
-    const cycle = ["Inhale...", "Hold...", "Exhale...", "Hold..."];
-    const interval = setInterval(() => {
-      setBreathCycle((prev) => (prev + 1) % cycle.length);
-      setBreathText(cycle[breathCycle]);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [breathCycle]);
-
-  // Auto-change affirmation every 5 seconds
-  useEffect(() => {
     const interval = setInterval(() => {
       setAffirmationIndex((prev) => (prev + 1) % affirmations.length);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -42,6 +32,37 @@ export default function Relaxation() {
     { emoji: "🤝", text: "Talk to a trusted friend or family member about your feelings." }
   ];
 
+  const audioTracks = [
+    { title: "🌊 Ocean Waves", src: "/assets/audio/ocean-waves.mp3" },
+    { title: "🌿 Forest Birds", src: "/assets/audio/bird.mp3" },
+    { title: "🔥 Campfire Sounds", src: "/assets/audio/campfire.mp3" },
+    { title: "🌧️ Rain Sounds", src: "/assets/audio/rain.mp3" },
+    { title: "🎧 ASMR Whispering", src: "/assets/audio/asmr-whisper.mp3" },
+    { title: "🎵 White Noise", src: "/assets/audio/white-noise.mp3" }
+  ];
+
+  const togglePlay = (track) => {
+    if (currentTrack && currentTrack.src !== track.src) {
+      currentTrack.audio.pause();
+    }
+
+    if (!currentTrack || currentTrack.src !== track.src) {
+      const newAudio = new Audio(track.src);
+      setCurrentTrack({ ...track, audio: newAudio });
+      newAudio.play();
+      setIsPlaying(true);
+      newAudio.onended = () => setIsPlaying(false);
+    } else {
+      if (isPlaying) {
+        currentTrack.audio.pause();
+        setIsPlaying(false);
+      } else {
+        currentTrack.audio.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 flex flex-col items-center">
       <motion.h1
@@ -50,36 +71,30 @@ export default function Relaxation() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        🌿 Guided Breathing & Stress-Relief
+        🌿 Stress-Relief Flashcards, Positive Affirmations & Calming Sounds
       </motion.h1>
 
-      <motion.p
-        className="text-center text-gray-600 mb-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.7 }}
-      >
-        Follow along with this guided breathing exercise to relax and relieve stress.
-      </motion.p>
-
-      {/* 🌬️ Guided Breathing Animation */}
-      <div className="flex flex-col items-center mb-12">
-        <motion.div
-          className="w-40 h-40 bg-blue-400 rounded-full flex items-center justify-center text-xl font-semibold text-white mb-8"
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {breathText}
-        </motion.div>
-        <p className="text-gray-500 text-lg mt-2">
-          Breathe in... Hold... Breathe out... Repeat.
-        </p>
+      {/* 🎵 Calming Sounds */}
+      <h2 className="text-2xl font-semibold text-center mb-4">🎵 Calming Sounds</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {audioTracks.map((track, index) => (
+          <button
+            key={index}
+            onClick={() => togglePlay(track)}
+            className={`p-4 rounded-lg shadow-md transition ${
+              currentTrack?.src === track.src && isPlaying ? "bg-blue-500 text-white" : "bg-gray-100"
+            }`}
+          >
+            <h2 className="text-lg font-semibold text-black">{track.title}</h2>
+            <p className="mt-2 text-sm text-gray-500">
+              {currentTrack?.src === track.src && isPlaying ? "🔊 Playing..." : "▶️ Click to Play"}
+            </p>
+          </button>
+        ))}
       </div>
 
       {/* 🧘 Stress-Relief Flashcards */}
-      <h2 className="text-2xl font-semibold text-center mb-4">🧘 Stress-Relief Tips</h2>
-      
-      {/* Flashcard Grid - 2 Rows x 3 Cards */}
+      <h2 className="text-2xl font-semibold text-center mt-10 mb-4">🧘 Stress-Relief Tips</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         {tips.map((tip, index) => (
           <Flashcard key={index} emoji={tip.emoji} text={tip.text} />
@@ -102,7 +117,6 @@ export default function Relaxation() {
   );
 }
 
-// Flashcard Component (Flip Stays Until Clicked Again with White Border)
 function Flashcard({ emoji, text }) {
   const [flipped, setFlipped] = useState(false);
 

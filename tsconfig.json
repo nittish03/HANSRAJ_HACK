@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/page.jsx", "app/layout.jsx", "components/ui/border-beam.jsx", "app/mental2/page.jsx", "app/mental2/api/search-blog.js", "stackbit.config.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/page.jsx", "app/layout.jsx", "components/ui/border-beam.jsx", "app/healSpace/page.jsx", "app/healSpace/api/search-blog.js", "stackbit.config.js"],
   "exclude": ["node_modules"]
 }

@@ -1,80 +1,92 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { Send, Loader2, Bot, User } from "lucide-react";
-import axios from "axios";
+import React, { useState } from "react";
+import { Send, Loader2 } from "lucide-react";
 
-export default function ChatMindCare() {
-  const [messages, setMessages] = useState([]);
+const MindCareChat = () => {
+  const [messages, setMessages] = useState([{ text: "Hello! How can I help?", sender: "ai" }]);
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const chatEndRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Auto-scroll to the latest message
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  const generateResponse = async (query) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/mindCare", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      });
+      const data = await response.json();
+      setIsLoading(false);
+      return data.response || "I'm here to help, but I couldn't understand that.";
+    } catch (error) {
+      setIsLoading(false);
+      return "I'm having trouble processing your request.";
+    }
+  };
 
-  // Send user message
-  const sendMessage = async () => {
+  const handleSendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = { text: input, sender: "user" };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
-    setLoading(true);
 
-    try {
-      const { data } = await axios.post("/api/mindCare", { message: input });
-
-      if (!data.response) throw new Error("Invalid response from API");
-
-      const botMessage = { text: data.response, sender: "bot" };
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("Error:", error);
-      setMessages((prev) => [...prev, { text: "⚠️ Error fetching response. Please try again.", sender: "bot" }]);
-    } finally {
-      setLoading(false);
-    }
+    const aiResponseText = await generateResponse(input);
+    const aiMessage = { text: aiResponseText, sender: "ai" };
+    
+    setMessages((prev) => [...prev, aiMessage]);
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-lg text-white">
-      <h2 className="text-2xl font-bold text-center mb-4">🧠 MindCare Chat</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <div className="w-[50vw] bg-gray-850 text-white rounded-2xl shadow-2xl flex flex-col h-[600px] border border-gray-700 overflow-hidden">
+        {/* Header */}
+        <div className="p-4 bg-blue-600 text-center font-bold flex items-center justify-center border-b border-gray-700 shadow-lg">
+          <span className="mr-2 text-2xl">🧠</span> MindCare Chat
+        </div>
 
-      {/* Chat Window */}
-      <div className="h-96 overflow-y-auto bg-gray-700 p-4 border border-gray-600 rounded-lg space-y-2">
-        {messages.map((msg, index) => (
-          <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-            <div className={`flex items-center space-x-2 max-w-xs p-3 rounded-lg text-sm shadow-md ${msg.sender === "user" ? "bg-blue-500" : "bg-gray-500"}`}>
-              {msg.sender === "bot" ? <Bot size={18} /> : <User size={18} />}
-              <span>{msg.text}</span>
+        {/* Chat Messages */}
+        <div className="flex-grow overflow-y-auto p-4 space-y-3 custom-scrollbar">
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={`p-3 rounded-xl max-w-[75%] text-sm shadow-md ${
+                msg.sender === "user" ? "bg-blue-500 ml-auto text-white" : "bg-gray-700 text-white"
+              }`}
+            >
+              {msg.text}
             </div>
-          </div>
-        ))}
-        {loading && <p className="text-gray-400 text-sm text-center animate-pulse">MindCare is typing...</p>}
-        <div ref={chatEndRef}></div>
-      </div>
+          ))}
+          {isLoading && (
+            <div className="p-3 bg-gray-700 rounded-xl flex items-center shadow-md">
+              <Loader2 className="mr-2 animate-spin" size={20} /> Generating response...
+            </div>
+          )}
+        </div>
 
-      {/* Input Field */}
-      <div className="flex mt-4 gap-2">
-        <input
-          type="text"
-          className="flex-1 p-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Ask MindCare anything..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          autoFocus
-        />
-        <button
-          className="bg-blue-500 p-3 rounded-lg shadow-md hover:bg-blue-600 transition disabled:opacity-50 flex items-center"
-          onClick={sendMessage}
-          disabled={loading}
-        >
-          {loading ? <Loader2 className="animate-spin" /> : <Send />}
-        </button>
+        {/* Input Field */}
+        <div className="p-4 border-t border-gray-700 flex bg-gray-800 shadow-inner">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask MindCare anything..."
+            className="flex-grow p-3 bg-gray-700 text-white rounded-l-full border-none focus:outline-none placeholder-gray-400"
+            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+          />
+          <button
+            onClick={handleSendMessage}
+            className="bg-blue-500 hover:bg-blue-600 transition-all text-white px-5 py-3 rounded-r-full shadow-lg"
+            disabled={isLoading}
+          >
+            <Send size={20} />
+          </button>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default MindCareChat;

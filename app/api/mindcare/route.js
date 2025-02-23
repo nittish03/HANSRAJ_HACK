@@ -5,7 +5,7 @@ export async function POST(req) {
   const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 
   try {
-    const { message } = await req.json();
+    const { query } = await req.json();
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     const prompt = `
@@ -73,7 +73,7 @@ And give if you are suggestions in different lines
 - **Always remind the user to consult a healthcare professional for serious concerns**
   
 
-     User: ${message}
+     User query: ${query}
       MindCare:
     `;
 
@@ -82,7 +82,6 @@ And give if you are suggestions in different lines
 
     return NextResponse.json({ response });
   } catch (error) {
-    console.error("Error in MindCare API:", error);
     return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
   }
 }

@@ -32,14 +32,18 @@ export default function Relaxation() {
     { emoji: "🤝", text: "Talk to a trusted friend or family member about your feelings." }
   ];
 
-  const audioTracks = [
-    { title: "🌊 Ocean Waves", src: "/assets/audio/ocean-waves.mp3" },
+const audioTracks = [
+    { title: "🌊 Ocean Waves", src: "/assets/audio/ocean.mp3" },
     { title: "🌿 Forest Birds", src: "/assets/audio/bird.mp3" },
-    { title: "🔥 Campfire Sounds", src: "/assets/audio/campfire.mp3" },
+    { title: "🔥 Campfire Sounds", src: "/assets/audio/fire.mp3" },
     { title: "🌧️ Rain Sounds", src: "/assets/audio/rain.mp3" },
-    { title: "🎧 ASMR Whispering", src: "/assets/audio/asmr-whisper.mp3" },
-    { title: "🎵 White Noise", src: "/assets/audio/white-noise.mp3" }
-  ];
+    { title: "🎧 ASMR Whispering", src: "/assets/audio/whispering.mp3" },
+    { title: "🎵 White Noise", src: "/assets/audio/white.mp3" }
+];
+
+
+
+
 
   const togglePlay = (track) => {
     if (currentTrack && currentTrack.src !== track.src) {

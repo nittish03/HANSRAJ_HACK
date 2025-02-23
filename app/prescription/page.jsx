@@ -23,8 +23,8 @@ export default function Prescription() {
   }, [searchTerm, allFiles]);
 
   // Open file in a new tab
-  const showFile = (filePath) => {
-    window.open(`/uploads/${filePath}`, "_blank");
+  const showFile = (fileUrl) => {
+    window.open(fileUrl, "_blank");
   };
 
   // Handle file selection
@@ -40,7 +40,7 @@ export default function Prescription() {
     }
   };
 
-  // Handle file upload
+  // Handle file upload & processing
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!file || !title) return toast.error("Please provide a title and select a file to upload.");
@@ -49,15 +49,16 @@ export default function Prescription() {
     formData.append("file", file);
     formData.append("title", title);
 
-    const loadingToast = toast.loading("Uploading...");
+    const loadingToast = toast.loading("Uploading & processing...");
     try {
       const response = await axios.post("/api/prescription/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
       toast.dismiss(loadingToast);
-      toast.success("File uploaded successfully.");
+      toast.success("File uploaded and processed successfully.");
 
+      // Add new file to state
       setAllFiles([response.data.data, ...allFiles]);
       setFilteredFiles([response.data.data, ...filteredFiles]);
 
@@ -85,25 +86,53 @@ export default function Prescription() {
     }
   };
 
-  const handleValidity = async (id) => {
+  // Handle validity check using Google Gemini AI
+  const handleValidity = async (fileData) => {
     const loading = toast.loading("Validating...");
     try {
-      const response = await axios.post("/api/prescription/get-single-upload", { id });
       const aiResponse = await axios({
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
         method: "post",
         data: {
-          contents: [{ parts: [{ text: `You are an expert in document validation and compliance analysis. Your task is to analyze the provided document data and determine its validity based on completeness, consistency, and authenticity.  
+          contents: [{ parts: [{ text: `You are an expert **clinical pharmacist** and **prescription specialist**. Your task is to analyze the given medical prescription and provide a **detailed breakdown** of the information, including:
 
-Assess the document for missing essential details, formatting errors, inconsistencies, or potential signs of forgery. Clearly state:  
-1. **Whether the document is valid or not** (Yes/No).  
-2. **Why** (Highlight any missing details, errors, or inconsistencies).  
+### **🔍 Prescription Analysis**
+1. **Patient Details:**  
+   - Does the prescription include the patient's name, age, gender, and relevant medical history?  
+   - Are there any pre-existing conditions or allergies mentioned?  
 
-DOCUMENT DATA: ${response.data.data.result}
+2. **Doctor & Prescription Validity:**  
+   - Is the prescribing doctor’s name, registration number, and signature present?  
+   - Is the prescription properly formatted and legally valid?  
 
-` }] }],
+3. **Medication Breakdown:**  
+   - List all prescribed medications along with their dosage and frequency.  
+   - Explain what each medicine is used for (e.g., Paracetamol → Pain relief, fever reduction).  
+   - Are there any **possible drug interactions** between the prescribed medicines?  
+
+4. **Dosage & Safety Check:**  
+   - Are the dosages appropriate based on medical standards?  
+   - Any **overdosing or underdosing** risks?  
+   - Are there any contraindications (e.g., a medicine that should not be taken with another)?  
+
+5. **Additional Medical Instructions:**  
+   - Any dietary restrictions mentioned? (e.g., “Take after food,” “Avoid alcohol”).  
+   - Special instructions for specific medicines? (e.g., “Take before bed,” “Do not crush the tablet”).  
+
+6. **Overall Recommendation:**  
+   - Is this prescription **safe and valid** based on medical standards? (Yes/No)  
+   - If not, what corrections or warnings should be noted?  
+
+---
+
+### **📝 PRESCRIPTION DATA:**  
+${fileData.result.extractedText}
+
+**🔍 Analyze the above prescription and provide your expert insights.**`
+ }] }], 
         },
       });
+
       toast.dismiss(loading);
       toast.success("File validation successful.");
       router.push(`/report?validity=${aiResponse.data.candidates[0].content.parts[0].text}`);
@@ -131,7 +160,7 @@ DOCUMENT DATA: ${response.data.data.result}
 
   return (
     <div className="max-w-5xl mx-auto px-4">
-      <h1 className="text-4xl font-bold mb-6 text-center">Validate Your documents</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Validate Your Documents</h1>
 
       {/* Upload Section */}
       <section className="bg-white p-6 rounded-lg shadow-md mb-6">
@@ -151,7 +180,7 @@ DOCUMENT DATA: ${response.data.data.result}
             className="w-full border px-4 py-2 text-black rounded-lg focus:ring-2 focus:ring-blue-500"
           />
           <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
-            Upload
+            Upload & Process
           </button>
         </form>
       </section>
@@ -174,17 +203,16 @@ DOCUMENT DATA: ${response.data.data.result}
               <span className="font-medium">{file.title}</span>
               <span className="">{file.type}</span>
 
-<span className="text-sm">
-  {new Date(file.dateUploaded).toLocaleString("en-GB", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true, // Enables 12-hour format with AM/PM
-  })}
-</span>
-
+              <span className="text-sm">
+                {new Date(file.dateUploaded).toLocaleString("en-GB", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })}
+              </span>
 
               <div className="flex justify-center items-center gap-4">
                 <button
@@ -199,7 +227,7 @@ DOCUMENT DATA: ${response.data.data.result}
                 />
                 <button
                   className="px-4 py-2 text-sm font-medium text-green-600 border border-green-600 rounded-md hover:bg-green-600 hover:text-white"
-                  onClick={() => handleValidity(file.id)}
+                  onClick={() => handleValidity(file)}
                 >
                   Check Validity
                 </button>

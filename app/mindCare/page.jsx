@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { Send, Loader2 } from "lucide-react";
 
 export default function ChatMindCare() {
@@ -21,23 +22,13 @@ export default function ChatMindCare() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/mindCare", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
-      });
+      const res = await axios.post("/api/mindCare", { message: input });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      if (!data.response) {
+      if (!res.data || !res.data.response) {
         throw new Error("Invalid response format from API.");
       }
 
-      const botMessage = { text: data.response, sender: "bot" };
+      const botMessage = { text: res.data.response, sender: "bot" };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("Error:", error);

@@ -1,20 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY);
 
   try {
     const { message } = await req.json();
-
-    if (!message) {
-      return NextResponse.json(
-        { error: "Message is required" },
-        { status: 400 }
-      );
-    }
-
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
     const prompt = `
       You are a highly advanced AI assistant named 'MindCare'. 
@@ -83,16 +75,13 @@ And give if you are suggestions in different lines
 
      User: ${message}
       MindCare:
-`;
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
+    `;
 
-    return NextResponse.json({ response: responseText });
+    const result = await model.generateContent(prompt);
+    const response = await result.response.text();
+
+    return NextResponse.json({ response });
   } catch (error) {
-    console.error("Error generating response:", error);
-    return NextResponse.json(
-      { error: "Failed to generate response" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
   }
 }

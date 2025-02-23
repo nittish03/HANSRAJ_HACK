@@ -14,7 +14,7 @@ export default function ChatMindCare() {
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-    
+
     const userMessage = { text: input, sender: "user" };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
@@ -27,12 +27,21 @@ export default function ChatMindCare() {
         body: JSON.stringify({ message: input }),
       });
 
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
       const data = await res.json();
+
+      if (!data.response) {
+        throw new Error("Invalid response format from API.");
+      }
+
       const botMessage = { text: data.response, sender: "bot" };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("Error:", error);
-      setMessages((prev) => [...prev, { text: "Error fetching response.", sender: "bot" }]);
+      setMessages((prev) => [...prev, { text: "⚠️ Error fetching response. Please try again.", sender: "bot" }]);
     } finally {
       setLoading(false);
     }

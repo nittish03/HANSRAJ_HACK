@@ -10,7 +10,7 @@ const MindCareChat = () => {
   const generateResponse = async (query) => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/mindcare", {
+      const response = await fetch("/api/mindCare", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

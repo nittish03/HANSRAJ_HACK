@@ -21,7 +21,7 @@ export default function ChatMindCare() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/mindCare", {
+      const res = await fetch("/api/mindcare", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),

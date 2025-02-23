@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { Send, Loader2, Bot, User } from "lucide-react";
 import axios from "axios";
-import { Send, Loader2 } from "lucide-react";
 
 export default function ChatMindCare() {
   const [messages, setMessages] = useState([]);
@@ -9,10 +9,12 @@ export default function ChatMindCare() {
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef(null);
 
+  // Auto-scroll to the latest message
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // Send user message
   const sendMessage = async () => {
     if (!input.trim()) return;
 
@@ -22,13 +24,11 @@ export default function ChatMindCare() {
     setLoading(true);
 
     try {
-      const res = await axios.post("/api/mindCare", { message: input });
+      const { data } = await axios.post("/api/mindCare", { message: input });
 
-      if (!res.data || !res.data.response) {
-        throw new Error("Invalid response format from API.");
-      }
+      if (!data.response) throw new Error("Invalid response from API");
 
-      const botMessage = { text: res.data.response, sender: "bot" };
+      const botMessage = { text: data.response, sender: "bot" };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("Error:", error);
@@ -39,29 +39,35 @@ export default function ChatMindCare() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-lg text-white">
+    <div className="max-w-2xl mx-auto p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-lg text-white">
       <h2 className="text-2xl font-bold text-center mb-4">🧠 MindCare Chat</h2>
-      <div className="h-80 overflow-y-auto bg-gray-700 p-4 border border-gray-600 rounded-lg space-y-2">
+
+      {/* Chat Window */}
+      <div className="h-96 overflow-y-auto bg-gray-700 p-4 border border-gray-600 rounded-lg space-y-2">
         {messages.map((msg, index) => (
           <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-            <span className={`px-4 py-2 rounded-lg shadow-md text-sm ${msg.sender === "user" ? "bg-blue-500" : "bg-gray-500"}`}>
-              {msg.text}
-            </span>
+            <div className={`flex items-center space-x-2 max-w-xs p-3 rounded-lg text-sm shadow-md ${msg.sender === "user" ? "bg-blue-500" : "bg-gray-500"}`}>
+              {msg.sender === "bot" ? <Bot size={18} /> : <User size={18} />}
+              <span>{msg.text}</span>
+            </div>
           </div>
         ))}
-        {loading && <p className="text-gray-400 text-sm text-center animate-pulse">Typing...</p>}
+        {loading && <p className="text-gray-400 text-sm text-center animate-pulse">MindCare is typing...</p>}
         <div ref={chatEndRef}></div>
       </div>
+
+      {/* Input Field */}
       <div className="flex mt-4 gap-2">
-        <input 
+        <input
           type="text"
           className="flex-1 p-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Type your message..."
+          placeholder="Ask MindCare anything..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          autoFocus
         />
-        <button 
+        <button
           className="bg-blue-500 p-3 rounded-lg shadow-md hover:bg-blue-600 transition disabled:opacity-50 flex items-center"
           onClick={sendMessage}
           disabled={loading}

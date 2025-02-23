@@ -82,6 +82,7 @@ And give if you are suggestions in different lines
 
     return NextResponse.json({ response });
   } catch (error) {
+    console.error("Error in MindCare API:", error);
     return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
   }
 }

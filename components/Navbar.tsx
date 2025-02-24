@@ -46,6 +46,7 @@ export default function Navbar() {
             { name: "RelaxHub", href: "/RelaxHub" },
             { name: "MomGuide", href: "/MomGuide" },
             { name: "MomCare", href: "/MomCare" },
+            { name: "HelpHub", href: "/HelpHub" },
           ].map((item) => (
             <NavLink key={item.href} href={item.href} className="relative text-sm hover:text-foreground/80">
               <span className={
@@ -91,6 +92,7 @@ export default function Navbar() {
             { name: "RelaxHub", href: "/RelaxHub" },
             { name: "MomGuide", href: "/MomGuide" },
             { name: "MomCare", href: "/MomCare" },
+            { name: "HelpHub", href: "/HelpHub" },
           ].map((item) => (
             <NavLink key={item.href} href={item.href} className="text-sm hover:text-foreground/80" onClick={() => setMenuOpen(false)}>
               <span className={

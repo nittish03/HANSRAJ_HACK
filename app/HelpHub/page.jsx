@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { FaInstagram, FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 
 const supportGroups = [
   { id: 1, name: "Pregnancy Support", link: "https://t.me/pregnancy_group" },
@@ -42,7 +43,46 @@ const hardcodedNGOs = [
   },
 ];
 
-export default function Community() {
+const delhiRotaractClubs = [
+  {
+    id: 1,
+    college: "Delhi University",
+    clubName: "Rotaract Club of DU",
+    instagram: "https://instagram.com/rotaract_du",
+    facebook: "https://facebook.com/rotaract_du",
+    twitter: "https://twitter.com/rotaract_du",
+    linkedin: "https://linkedin.com/in/rotaract_du",
+  },
+  {
+    id: 2,
+    college: "Indraprastha University",
+    clubName: "Rotaract Club of IPU",
+    instagram: "https://instagram.com/rotaract_ipu",
+    facebook: "https://facebook.com/rotaract_ipu",
+    twitter: "https://twitter.com/rotaract_ipu",
+    linkedin: "https://linkedin.com/in/rotaract_ipu",
+  },
+  {
+    id: 3,
+    college: "Jamia Millia Islamia",
+    clubName: "Rotaract Club of JMI",
+    instagram: "https://instagram.com/rotaract_jmi",
+    facebook: "https://facebook.com/rotaract_jmi",
+    twitter: "https://twitter.com/rotaract_jmi",
+    linkedin: "https://linkedin.com/in/rotaract_jmi",
+  },
+  {
+    id: 4,
+    college: "Ambedkar University Delhi",
+    clubName: "Rotaract Club of AUD",
+    instagram: "https://instagram.com/rotaract_aud",
+    facebook: "https://facebook.com/rotaract_aud",
+    twitter: "https://twitter.com/rotaract_aud",
+    linkedin: "https://linkedin.com/in/rotaract_aud",
+  },
+];
+
+export default function CommunityPage() {
   return (
     <div className="max-w-5xl mx-auto p-6 min-h-screen space-y-10">
       {/* Peer Support Groups Section */}
@@ -89,6 +129,39 @@ export default function Community() {
                   className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600"
                 >
                   View on Map
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Rotaract Clubs in Delhi Section */}
+      <div>
+        <h1 className="text-3xl font-bold text-center mb-6">🔗 Rotaract Clubs in Delhi</h1>
+        <p className="text-center text-gray-600 mb-6">
+          Connect with the Rotaract Clubs of various colleges in Delhi through their social media handles.
+        </p>
+
+        <ul className="space-y-6">
+          {delhiRotaractClubs.map((club) => (
+            <li key={club.id} className="bg-white p-4 shadow rounded-lg border border-gray-200">
+              <h2 className="text-xl font-semibold text-black">{club.college}</h2>
+              <p className="text-gray-600">{club.clubName}</p>
+
+              {/* Social Media Icons */}
+              <div className="mt-3 flex space-x-4">
+                <a href={club.instagram} target="_blank" rel="noopener noreferrer" className="text-pink-500 text-2xl hover:text-pink-600">
+                  <FaInstagram />
+                </a>
+                <a href={club.facebook} target="_blank" rel="noopener noreferrer" className="text-blue-600 text-2xl hover:text-blue-700">
+                  <FaFacebook />
+                </a>
+                <a href={club.twitter} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-2xl hover:text-blue-500">
+                  <FaTwitter />
+                </a>
+                <a href={club.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-800 text-2xl hover:text-blue-900">
+                  <FaLinkedin />
                 </a>
               </div>
             </li>

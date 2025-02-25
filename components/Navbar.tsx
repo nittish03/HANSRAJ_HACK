@@ -40,7 +40,6 @@ export default function Navbar() {
           {[
             { name: "Home", href: "/" },
             { name: "Map", href: "/map" },
-            { name: "HairCare", href: "/hairCare" },
             { name: "MindCare", href: "/mindCare" },
             { name: "HealSpace", href: "/healSpace" },
             { name: "RelaxHub", href: "/RelaxHub" },

@@ -9,7 +9,7 @@ export default function Home() {
 
 <LandingPage/>
 <ChatBot/>
-<Warning/>
+{/* <Warning/> */}
 </div>
 </>
   );

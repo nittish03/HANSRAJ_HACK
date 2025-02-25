@@ -62,7 +62,7 @@ const PollutionChatbot = () => {
       {isOpen && (
         <div className="fixed bottom-4 right-20 w-80 h-[500px] bg-white rounded-lg shadow-xl border border-black flex flex-col">
           <div className="bg-blue-500 text-black p-3 flex justify-between items-center rounded-t-lg">
-            <h3 className="font-bold">Chatbot</h3>
+            <h3 className="font-bold">Messenger</h3>
             <button onClick={() => setIsOpen(false)}>
               <X size={24} />
             </button>
